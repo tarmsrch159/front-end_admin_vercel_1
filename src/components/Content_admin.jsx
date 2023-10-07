@@ -161,7 +161,7 @@ function Content_admin() {
         }
 
         //Display user
-        axios.get(`http://localhost:3000/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
+        axios.get(`https://project-node-js-98ba.onrender.com/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
             setDisplay_user(res.data.data)
             console.log(res.data.data)
             setTotalPages(res.data.totalPages);

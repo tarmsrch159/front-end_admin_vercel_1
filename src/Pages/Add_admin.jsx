@@ -62,7 +62,7 @@ function Add_admin() {
             alert('กรุณากรอกข้อมูลให้ครบ')
             return
         }else {
-            axios.post("http://localhost:3000/add_admin/", { 
+            axios.post("https://project-node-js-98ba.onrender.com/add_admin/", { 
                 name: name, 
                 lastname: lastname ,
                 tel: tel ,
@@ -84,7 +84,7 @@ function Add_admin() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://project-node-js-98ba.onrender.com/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
         })
         if (!permission) {

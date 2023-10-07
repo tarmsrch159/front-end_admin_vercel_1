@@ -67,7 +67,7 @@ function Edit_user_info() {
 
     //Update Function
     const Updata_user_info = (reg_id) => {
-        axios.put("http://localhost:3000/update_user_info/", {
+        axios.put("https://project-node-js-98ba.onrender.com/update_user_info/", {
             reg_id: reg_id,
             name: name,
             lastname: lastname,
@@ -101,7 +101,7 @@ function Edit_user_info() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://project-node-js-98ba.onrender.com/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
             setName(res.data[0].name)
             setLastname(res.data[0].lastname)
@@ -132,7 +132,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_provinces = async () => {
-            const resprovinces = await fetch("http://localhost:3000/get_provinces")
+            const resprovinces = await fetch("https://project-node-js-98ba.onrender.com/get_provinces")
             const respro = await resprovinces.json();
             setShow_provinces(await respro)
         }
@@ -141,7 +141,7 @@ function Edit_user_info() {
 
     // useEffect(() => {
     //     const get_amphures = async () => {
-    //         const resAmphures = await fetch(`http://localhost:3000/regular_amphures/`)
+    //         const resAmphures = await fetch(`https://project-node-js-98ba.onrender.com/regular_amphures/`)
     //         const resAmp = await resAmphures.json();
     //         setShow_amphures(await resAmp)
     //     }
@@ -161,7 +161,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_amphures = async () => {
-            const resAmphures = await fetch(`http://localhost:3000/get_amphures/${province_id}`)
+            const resAmphures = await fetch(`https://project-node-js-98ba.onrender.com/get_amphures/${province_id}`)
             const resAmp = await resAmphures.json();
             setShow_amphures(await resAmp)
         }
@@ -171,7 +171,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_district = async () => {
-            const resDistrict = await fetch(`http://localhost:3000/get_districts/${amphure_id}`)
+            const resDistrict = await fetch(`https://project-node-js-98ba.onrender.com/get_districts/${amphure_id}`)
             const resDis = await resDistrict.json();
             setShow_district(await resDis)
         }
@@ -181,7 +181,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const course_id = async () => {
-            const resCourse_id = await fetch(`http://localhost:3000/course_name`)
+            const resCourse_id = await fetch(`https://project-node-js-98ba.onrender.com/course_name`)
             const resCourse = await resCourse_id.json();
             setCourse_id_api(await resCourse)
         }

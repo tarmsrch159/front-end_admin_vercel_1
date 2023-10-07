@@ -31,7 +31,7 @@ function Login_admin() {
             } else {
                 setPwd_alert(false)
             }
-            const res = await axios.post("http://localhost:3000/admin_login",
+            const res = await axios.post("https://project-node-js-98ba.onrender.com/admin_login",
                 JSON.stringify(user_data), {
                 headers: {
                     'Content-Type': 'application/json'

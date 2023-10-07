@@ -56,7 +56,7 @@ function Edit_score() {
     //Update Function
     var insert_score = async ()  => {
         if (confirm("ต้องการกรอกคะแนนใช่หรือไม่")) {
-            axios.put("http://localhost:3000/sum_score", {
+            axios.put("https://project-node-js-98ba.onrender.com/sum_score", {
                 reg_id: reg_id,
                 kn_score: kn_score,
                 profi_score: profi_score,
@@ -75,7 +75,7 @@ function Edit_score() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://project-node-js-98ba.onrender.com/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
             setReg_id(res.data[0].reg_id)
             setName(res.data[0].name)

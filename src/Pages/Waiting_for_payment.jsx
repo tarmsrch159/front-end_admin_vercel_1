@@ -33,7 +33,7 @@ function Waiting_for_payment() {
     const confirm_permission = (val_id) => {
         console.log(val_id)
         if (confirm("ต้องการจะยืนยันสิทธิ์แก่ผู้สมัครคนนี้หรือไม่")) {
-            axios.put("http://localhost:3000/update_permission", {
+            axios.put("https://project-node-js-98ba.onrender.com/update_permission", {
                 reg_id: val_id,
                 permission: "ผู้สมัคร"
             })
@@ -62,7 +62,7 @@ function Waiting_for_payment() {
         }
 
         //Display user
-        axios.get(`http://localhost:3000/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
+        axios.get(`https://project-node-js-98ba.onrender.com/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
             setWaiting_payment(res.data.data)
             setTotalPages(res.data.totalPages);
         })
@@ -235,7 +235,7 @@ function Waiting_for_payment() {
                                                                                                     <div className="modal-content">
                                                                                                         <div className="ratio ratio-16x9">
                                                                                                             <img
-                                                                                                                src={`http://localhost:3000/images/${items.receipt}`}
+                                                                                                                src={`https://project-node-js-98ba.onrender.com/images/${items.receipt}`}
                                                                                                                 width={100}
                                                                                                                 height={100}
                                                                                                             />

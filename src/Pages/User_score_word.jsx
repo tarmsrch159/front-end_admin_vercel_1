@@ -102,7 +102,7 @@ function User_score() {
 
         //Display user
         const get_users = async () => {
-            const get_data_as = await axios.get(`http://localhost:3000/user_score/${change_m}`)
+            const get_data_as = await axios.get(`https://project-node-js-98ba.onrender.com/user_score/${change_m}`)
             setDisplay_user(await get_data_as.data)
         }
         get_users()
