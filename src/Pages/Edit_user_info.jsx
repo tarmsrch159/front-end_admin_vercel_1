@@ -109,7 +109,7 @@ function Edit_user_info() {
             setLastname_EN(res.data[0].lastname_en)
             setGender(res.data[0].gender)
             setBirthday(res.data[0].Thaibirthday)
-            setCourse(res.data[0].course_id)
+            setCourse(res.data[0].course)
             setCandidate(res.data[0].candidate)
             setPrefix(res.data[0].prefix)
             setNationality(res.data[0].nationality)
