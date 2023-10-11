@@ -91,7 +91,7 @@ function Edit_user_info() {
             .then((res) => {
                 console.log('Data updated successfully', res.data);
                 alert('อัพเดตข้อมูลเรียบร้อย')
-                window.location.href = '/user_info'
+                window.location = '/user_info'
             })
             .catch((error) => {
                 // Handle error (e.g., show an error message)
@@ -189,8 +189,6 @@ function Edit_user_info() {
         course_id()
     }, [])
 
-    console.log(course_id_api)
-    console.log(single_user)
 
     return (
         <>
@@ -214,10 +212,10 @@ function Edit_user_info() {
                                 <div className="card-body">
                                     <h2 className="card-title" style={{ color: "blue", display: 'flex', justifyContent: 'center' }}>จัดการข้อมูลส่วนบุคคล</h2>
 
-                                    <form className="forms-sample">
-                                        {single_user.map((val) => {
-                                            return (
-                                                <>
+                                    {single_user.map((val) => {
+                                        return (
+                                            <>
+                                                <form className="forms-sample">
 
                                                     <div key={val.id}>
                                                         {/* <div className="form-group mt-3">
@@ -422,15 +420,15 @@ function Edit_user_info() {
                                                         </div>
 
                                                     </div>
-                                                    <button type="submit" className="btn btn-primary me-2" onClick={() => Updata_user_info(val.reg_id)}>อัปเดตข้อมูล</button>
-                                                    <button className="btn btn-light">Cancel</button>
-                                                </>
-                                            )
-                                        })}
 
+                                                </form>
+                                                <button type="submit" className="btn btn-primary me-2" onClick={() => Updata_user_info(val.reg_id)}>อัปเดตข้อมูล</button>
+                                                <button className="btn btn-light">Cancel</button>
 
+                                            </>
+                                        )
 
-                                    </form>
+                                    })}
                                 </div>
                             </div>
                         </div>

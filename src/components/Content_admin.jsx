@@ -176,11 +176,12 @@ function Content_admin() {
         setPage(newPage);
     };
 
+    const [show_course, setShow_course] = useState([])
     useEffect(() => {
         axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
-            console.log(res)
+            setShow_course(res.data)
         })
-    },[])
+    }, [])
 
     return (
         <>
@@ -285,7 +286,15 @@ function Content_admin() {
                                                                         <>
                                                                             <tr key={items.reg_id} role="row" className="odd">
                                                                                 <td className="sorting_1">{items.reg_id}</td>
-                                                                                <td>{items.course_name}</td>
+                                                                                <td>{show_course.map((res) => {
+                                                                                    return <>
+                                                                                        {
+                                                                                            res.id == items.course
+                                                                                                ? <p>{res.name_th}</p>
+                                                                                                : null
+                                                                                        }
+                                                                                    </>
+                                                                                })}</td>
                                                                                 <td>{items.candidate}</td>
                                                                                 <td>{items.prefix} {items.name} {items.lastname}</td>
                                                                                 {/* <td>{items.permission === "รอชำระเงิน"

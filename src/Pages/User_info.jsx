@@ -28,9 +28,9 @@ function User_info() {
   const toThaiDateString = (date) => {
     const change_date = new Date(date)
     let monthNames = [
-        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม.",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+      "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม.",
+      "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
     ];
 
     let year = change_date.getFullYear() + 543
@@ -38,7 +38,7 @@ function User_info() {
     let numOfDay = change_date.getDate();
 
     return `${numOfDay} ${month} ${year}`
-}
+  }
 
 
 
@@ -66,17 +66,17 @@ function User_info() {
   }
 
   const cancel_permission = async (reg_id) => {
-    if(confirm('คุณต้องการจะยกเลิกสิทธิ์ของผู้สมัครใช่หรือไม่ ?')){
+    if (confirm('คุณต้องการจะยกเลิกสิทธิ์ของผู้สมัครใช่หรือไม่ ?')) {
       await axios.put('https://server-2-s3v5.onrender.com/cancel_permission/' + reg_id).then(
         alert('ยกเลิกสิทธิ์ของผู้สมัครเรียบร้อย')
       )
       location.reload()
-    }else{
+    } else {
       alert('เกิดข้อผิดพลาด')
       return
     }
-    
-    
+
+
   }
 
   const For_user_dont_pay = () => {
@@ -111,7 +111,12 @@ function User_info() {
     setPage(newPage);
   };
 
-  console.log(totalPages)
+  const [show_course, setShow_course] = useState([])
+  useEffect(() => {
+    axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+      setShow_course(res.data)
+    })
+  }, [])
   return (
     <>
       {/* Page Wrapper */}
@@ -215,7 +220,15 @@ function User_info() {
                                     <>
                                       <tr key={items.reg_id} role="row" className="odd">
                                         <td className="sorting_1">{items.reg_id}</td>
-                                        <td>{items.course_name}</td>
+                                        <td>{show_course.map((res) => {
+                                          return <>
+                                            {
+                                              res.id == items.course
+                                                ? <p>{res.name_th}</p>
+                                                : null
+                                            }
+                                          </>
+                                        })}</td>
                                         <td>{items.candidate}</td>
                                         <td>{items.prefix} {items.name} {items.lastname}</td>
                                         {/* <td>{items.gender}</td> */}
