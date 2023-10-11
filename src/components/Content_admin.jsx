@@ -185,7 +185,6 @@ function Content_admin() {
             })
         })
     }, [])
-    console.log(display_user)
     return (
         <>
             {/* Page Wrapper */}
@@ -289,7 +288,7 @@ function Content_admin() {
                                                                         <>
                                                                             <tr key={items.reg_id} role="row" className="odd">
                                                                                 <td className="sorting_1">{items.reg_id}</td>
-                                                                                <td>{show_course.map((res) => {
+                                                                                {/* <td>{show_course.map((res) => {
                                                                                     return <>
                                                                                         {
                                                                                             res.id == items.course
@@ -299,7 +298,8 @@ function Content_admin() {
                                                                                                 : null
                                                                                         }
                                                                                     </>
-                                                                                })}</td>
+                                                                                })}</td> */}
+                                                                                <td>{items.course_name_th}</td>
                                                                                 <td>{items.candidate}</td>
                                                                                 <td>{items.prefix} {items.name} {items.lastname}</td>
                                                                                 {/* <td>{items.permission === "รอชำระเงิน"

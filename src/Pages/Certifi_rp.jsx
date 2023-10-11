@@ -80,7 +80,7 @@ function Certifi_rp() {
             val.kn_score,
             val.profi_score,
             val.sum_score,
-            val.sum_score,
+            val.book_id,
             val.change_reg_day,
             val.pass_fail,
         ])
@@ -121,7 +121,6 @@ function Certifi_rp() {
         doc.save("ข้อมูลเกียรติบัตรผู้ที่ผ่านการสอบ.pdf")
     }
 
-    console.log(single_certi)
     const Export_certificate = async (reg_id) => {
         const certifi = async () => {
             const certifi_get = await axios.get('https://server-2-s3v5.onrender.com/get_single_certi/' + reg_id)
@@ -316,7 +315,7 @@ function Certifi_rp() {
 
 
             doc.addImage(`https://server-2-s3v5.onrender.com/images/${single_certi.profile_img}`, 'JPEG', 41, 232, 25, 30)
-            doc.addImage(`https://server-2-s3v5.onrender.com/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
+            doc.addImage(`https://server-2-s3v5.onrender.com/images/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
 
             doc.setFont("Font")
             const fontSize25 = 16
@@ -632,14 +631,12 @@ function Certifi_rp() {
 
 
 
-        console.log(single_certi)
     }, [change_m, data_status, change_course, page, pageSize, single_certi])
 
     const handlePageChange = (newPage) => {
         setPage(newPage);
     };
 
-    console.log(display_user)
 
     return (
         <>
@@ -744,7 +741,7 @@ function Certifi_rp() {
                                                                         <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" style={{ width: '200px' }}>ผลการทดสอบ</th>
                                                                         <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>เลขที่
                                                                             บท.สพ. Xxxx/2566</th>
-                                                                        <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '200px' }}>รอบที่สมัคร</th>
+                                                                        {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '200px' }}>รอบที่สมัคร</th> */}
                                                                         <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>เกณฑ์กรมพัฒนาฯ 70%</th>
                                                                         <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>ออกวุฒิบัตร</th>
                                                                     </tr>
@@ -768,14 +765,14 @@ function Certifi_rp() {
                                                                             <>
                                                                                 <tr key={items.reg_id} role="row" className="odd">
                                                                                     <td className="sorting_1">{items.reg_id}</td>
-                                                                                    <td>{items.course}</td>
+                                                                                    <td>{items.course_name_th}</td>
                                                                                     <td>{items.name} {items.lastname}</td>
                                                                                     <td>{items.kn_score}</td>
                                                                                     <td>{items.profi_score}</td>
                                                                                     <td>{items.sum_score}</td>
                                                                                     <td style={{ color: 'green', textDecoration: 'underline' }}>{items.pass_fail}</td>
-                                                                                    <td>{items.book_id}</td>
-                                                                                    <td>{toThaiDateString(items.change_reg_day)}</td>
+                                                                                    <td>เลขที่ บท.สพ. {items.book_id}</td>
+                                                                                    {/* <td>{toThaiDateString(items.change_reg_day)}</td> */}
                                                                                     <td style={{ color: 'green', textDecoration: 'underline' }}> รับวุฒิบัตร
                                                                                     </td>
                                                                                     <td>{/* Button trigger modal */}

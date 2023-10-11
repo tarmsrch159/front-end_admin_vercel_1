@@ -220,7 +220,7 @@ function User_info() {
                                     <>
                                       <tr key={items.reg_id} role="row" className="odd">
                                         <td className="sorting_1">{items.reg_id}</td>
-                                        <td>{show_course.map((res) => {
+                                        {/* <td>{show_course.map((res) => {
                                           return <>
                                             {
                                               res.id == items.course
@@ -228,7 +228,8 @@ function User_info() {
                                                 : null
                                             }
                                           </>
-                                        })}</td>
+                                        })}</td> */}
+                                        <td>{items.course_name_th}</td>
                                         <td>{items.candidate}</td>
                                         <td>{items.prefix} {items.name} {items.lastname}</td>
                                         {/* <td>{items.gender}</td> */}

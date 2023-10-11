@@ -183,14 +183,21 @@ function User_score() {
 
     useEffect(() => {
         display_user.map((val) => {
-            if(val.sum_score < 70){
+            if (val.sum_score < 70) {
                 setDisplay_score("ไม่ผ่าน")
-            }else{
+            } else {
                 setDisplay_score("ผ่าน")
             }
-            
+
         })
-    },[display_user])
+    }, [display_user])
+
+    const [show_course, setShow_course] = useState([])
+    useEffect(() => {
+        axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+            setShow_course(res.data)
+        })
+    }, [])
 
 
     return (
@@ -314,7 +321,15 @@ function User_score() {
                                                                         <>
                                                                             <tr key={items.reg_id} role="row" className="odd">
                                                                                 <td className="sorting_1">{items.reg_id}</td>
-                                                                                <td>{items.course_name_th}</td>
+                                                                                <td>{show_course.map((res) => {
+                                                                                    return <>
+                                                                                        {
+                                                                                            res.id == items.course
+                                                                                                ? <p>{res.name_th}</p>
+                                                                                                : null
+                                                                                        }
+                                                                                    </>
+                                                                                })}</td>
                                                                                 <td>{items.name} {items.lastname}</td>
                                                                                 <td>{items.kn_score}</td>
                                                                                 <td>{items.profi_score}</td>
@@ -334,10 +349,10 @@ function User_score() {
                                                                                             </p>
                                                                                         </>
                                                                                     )}</td>
-                                                                                    {display_score == 'ไม่ผ่าน'
+                                                                                {display_score == 'ไม่ผ่าน'
                                                                                     ? <td style={{ color: 'red', textDecoration: 'underline' }}>{display_score}</td>
                                                                                     : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>}
-                                                                                
+
                                                                                 <td>
                                                                                     <Link to={{ pathname: `/edit_score/${items.reg_id}` }}>
                                                                                         <button className="btn btn-danger">
