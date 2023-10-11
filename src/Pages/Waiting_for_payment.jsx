@@ -75,6 +75,10 @@ function Waiting_for_payment() {
         setPage(newPage);
     };
 
+    function click_receipt(receipt) {
+        window.open(receipt)
+    }
+
     console.log(waiting_payment)
     return (
         <>
