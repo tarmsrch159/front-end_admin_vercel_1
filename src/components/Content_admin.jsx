@@ -176,6 +176,12 @@ function Content_admin() {
         setPage(newPage);
     };
 
+    useEffect(() => {
+        axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+            console.log(res)
+        })
+    },[])
+
     return (
         <>
             {/* Page Wrapper */}
