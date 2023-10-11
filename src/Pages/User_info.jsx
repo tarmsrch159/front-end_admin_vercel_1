@@ -266,7 +266,7 @@ function User_info() {
 
                                         </td> */}
 
-                                        <td style={{ display: 'flex', justifyContent: "space-between" }}>
+                                        <td style={{ display: 'flex', justifyContent: "center" }}>
                                           <Link to={{ pathname: `/edit_user_info/${items.reg_id}` }}>
                                             <button className="btn btn-primary">
                                               <span className="text">
