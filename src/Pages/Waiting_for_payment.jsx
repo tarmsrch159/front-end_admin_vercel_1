@@ -33,7 +33,7 @@ function Waiting_for_payment() {
     const confirm_permission = (val_id) => {
         console.log(val_id)
         if (confirm("ต้องการจะยืนยันสิทธิ์แก่ผู้สมัครคนนี้หรือไม่")) {
-            axios.put("https://project-node-js-98ba.onrender.com/update_permission", {
+            axios.put("https://server-2-s3v5.onrender.com/update_permission", {
                 reg_id: val_id,
                 permission: "ผู้สมัคร"
             })
@@ -62,7 +62,7 @@ function Waiting_for_payment() {
         }
 
         //Display user
-        axios.get(`https://project-node-js-98ba.onrender.com/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
+        axios.get(`https://server-2-s3v5.onrender.com/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
             setWaiting_payment(res.data.data)
             setTotalPages(res.data.totalPages);
         })
@@ -181,7 +181,7 @@ function Waiting_for_payment() {
                                                                                 <td className="sorting_1">{items.reg_id}</td>
                                                                                 <td>{items.course_name_th}</td>
                                                                                 <td>{items.prefix} {items.name} {items.lastname}</td>
-                                                                                <td>{items.permission === "รอชำระเงิน"
+                                                                                <td className='d-flex justify-content-center align-items-center'>{items.permission === "รอชำระเงิน"
                                                                                     ? (
                                                                                         <>
                                                                                             <a href="#" class="btn btn-warning">
@@ -200,8 +200,7 @@ function Waiting_for_payment() {
                                                                                     {items.receipt != ""
                                                                                         ?
                                                                                         <>
-                                                                                            {/* Section: Images */}
-                                                                                            <div className="">
+                                                                                            {/* <div className="">
                                                                                                 <div className="">
                                                                                                     <div
                                                                                                         className="bg-image hover-overlay ripple"
@@ -223,7 +222,6 @@ function Waiting_for_payment() {
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            {/* Modal 1 */}
                                                                                             <div
                                                                                                 className="modal fade"
                                                                                                 id="exampleModal1"
@@ -235,30 +233,43 @@ function Waiting_for_payment() {
                                                                                                     <div className="modal-content">
                                                                                                         <div className="ratio ratio-16x9">
                                                                                                             <img
-                                                                                                                src={`https://project-node-js-98ba.onrender.com/images/${items.receipt}`}
+                                                                                                                src={`http://localhost:3000/images/${items.receipt}`}
                                                                                                                 width={100}
                                                                                                                 height={100}
                                                                                                             />
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
+                                                                                            </div> */}
+                                                                                            <div className='d-flex justify-content-center align-items-center'>
+                                                                                                <button className='btn btn-outline-info' onClick={() => click_receipt(`http://localhost:3000/images/${ items.receipt }`)} >
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
+                                                                                                        <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+                                                                                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                                                                                                    </svg>
+                                                                                                </button>
                                                                                             </div>
+
                                                                                         </>
 
                                                                                         : <div className='d-flex justify-content-center align-items-center'>
-                                                                                            {/* <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
                                                                                                 <path d="M15 8a6.973 6.973 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8ZM2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Z" />
-                                                                                            </svg> */}
+                                                                                            </svg>
                                                                                         </div>
 
                                                                                     }
                                                                                 </td>
-                                                                                <td style={{ display: 'flex', justifyContent: "space-between" }}>
+                                                                                <td style={{ display: 'flex', justifyContent: "center" }}>
 
+                                                                                    {items.receipt != ''
+                                                                                        ? <button onClick={() => confirm_permission(items.reg_id)} className="btn btn-primary">
+                                                                                            <span className="text">คลิกยืนยันสิทธิ์</span>
+                                                                                        </button>
+                                                                                        : <button disabled className="btn btn-danger">
+                                                                                            <i class="fas fa-xmark"></i>
+                                                                                        </button>}
 
-                                                                                    <button onClick={() => confirm_permission(items.reg_id)} className="btn btn-danger btn-icon-split">
-                                                                                        <span className="text">คลิกยืนยันสิทธิ์</span>
-                                                                                    </button>
                                                                                 </td>
                                                                             </tr>
                                                                         </>
@@ -324,15 +335,15 @@ function Waiting_for_payment() {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            {/* <h5 className="modal-title" id="exampleModalLabel">ต้องการที่จะออกหรือไม่</h5> */}
                             <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <h4 className="modal-body" style={{ textAlign: 'center' }}>ต้องการที่จะออกหรือไม่</h4>
                         <div className="modal-footer">
-                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
+                            <button className="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
+                            <button className="btn btn-primary" onClick={handleLogout}>ออกจากระบบ</button>
                         </div>
                     </div>
                 </div>

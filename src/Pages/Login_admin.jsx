@@ -31,7 +31,7 @@ function Login_admin() {
             } else {
                 setPwd_alert(false)
             }
-            const res = await axios.post("https://project-node-js-98ba.onrender.com/admin_login",
+            const res = await axios.post("https://server-2-s3v5.onrender.com/admin_login",
                 JSON.stringify(user_data), {
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ function Login_admin() {
                                                         <input type="checkbox" className="custom-control-input" id="customCheck" />
                                                     </div>
                                                 </div>
-                                                <button className="btn btn-primary btn-user btn-block" onClick={submit}> Login </button>
+                                                <button className="btn btn-primary btn-user btn-block" onClick={submit}> เข้าสู่ระบบ </button>
                                                 
 
                                                 <hr />

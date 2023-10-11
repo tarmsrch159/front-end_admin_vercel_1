@@ -50,7 +50,7 @@ function User_info() {
 
 
   const delete_user = (reg_id) => {
-    axios.delete(`https://project-node-js-98ba.onrender.com/delete_member/${reg_id}`).then(() => {
+    axios.delete(`https://server-2-s3v5.onrender.com/delete_member/${reg_id}`).then(() => {
 
       if (confirm("ต้องการจะลบข้อมูลใช่หรือไม่") == true) {
         setDisplay_user(
@@ -67,7 +67,7 @@ function User_info() {
 
   const cancel_permission = async (reg_id) => {
     if(confirm('คุณต้องการจะยกเลิกสิทธิ์ของผู้สมัครใช่หรือไม่ ?')){
-      await axios.put('https://project-node-js-98ba.onrender.com/cancel_permission/' + reg_id).then(
+      await axios.put('https://server-2-s3v5.onrender.com/cancel_permission/' + reg_id).then(
         alert('ยกเลิกสิทธิ์ของผู้สมัครเรียบร้อย')
       )
       location.reload()
@@ -95,7 +95,7 @@ function User_info() {
     }
 
     //Display user
-    axios.get(`https://project-node-js-98ba.onrender.com/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
+    axios.get(`https://server-2-s3v5.onrender.com/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
       setDisplay_user(res.data.data)
 
       setTotalPages(res.data.totalPages);

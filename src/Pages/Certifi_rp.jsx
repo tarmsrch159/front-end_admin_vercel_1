@@ -124,7 +124,7 @@ function Certifi_rp() {
     console.log(single_certi)
     const Export_certificate = async (reg_id) => {
         const certifi = async () => {
-            const certifi_get = await axios.get('https://project-node-js-98ba.onrender.com/get_single_certi/' + reg_id)
+            const certifi_get = await axios.get('https://server-2-s3v5.onrender.com/get_single_certi/' + reg_id)
             setSingle_certi(await certifi_get.data[0])
         }
         await certifi()
@@ -315,8 +315,8 @@ function Certifi_rp() {
                 120, 253, { align: "center" })
 
 
-            doc.addImage(`https://project-node-js-98ba.onrender.com/images/${single_certi.profile_img}`, 'JPEG', 41, 232, 25, 30)
-            doc.addImage(`https://project-node-js-98ba.onrender.com/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
+            doc.addImage(`https://server-2-s3v5.onrender.com/images/${single_certi.profile_img}`, 'JPEG', 41, 232, 25, 30)
+            doc.addImage(`https://server-2-s3v5.onrender.com/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
 
             doc.setFont("Font")
             const fontSize25 = 16
@@ -624,7 +624,7 @@ function Certifi_rp() {
 
         //Display user
         const get_users = async () => {
-            const get_data_as = await axios.get(`https://project-node-js-98ba.onrender.com/certifi_rp/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
+            const get_data_as = await axios.get(`https://server-2-s3v5.onrender.com/certifi_rp/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
             setDisplay_user(await get_data_as.data.data)
             setTotalPages(get_data_as.data.totalPages)
         }

@@ -163,7 +163,7 @@ function User_score() {
 
         //Display user
         const get_users = async () => {
-            const get_data_as = await axios.get(`https://project-node-js-98ba.onrender.com/user_score/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
+            const get_data_as = await axios.get(`https://server-2-s3v5.onrender.com/user_score/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
             setDisplay_user(await get_data_as.data.data)
             setTotalPages(get_data_as.data.totalPages)
         }
