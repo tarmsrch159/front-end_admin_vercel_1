@@ -36,6 +36,7 @@ function Content_admin() {
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
     const [m_th, setM_th] = useState("")
+    const [th_course, setTh_course] = useState([])
     const today = new Date()
     const m = today.getMonth() + 1
     const y = today.getFullYear()
@@ -163,7 +164,6 @@ function Content_admin() {
         //Display user
         axios.get(`https://server-2-s3v5.onrender.com/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
             setDisplay_user(res.data.data)
-            console.log(res.data.data)
             setTotalPages(res.data.totalPages);
 
         })
@@ -180,9 +180,12 @@ function Content_admin() {
     useEffect(() => {
         axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
             setShow_course(res.data)
+            show_course.map((val) => {
+                setTh_course(val.name_th)
+            })
         })
     }, [])
-
+    console.log(display_user)
     return (
         <>
             {/* Page Wrapper */}
@@ -290,7 +293,9 @@ function Content_admin() {
                                                                                     return <>
                                                                                         {
                                                                                             res.id == items.course
-                                                                                                ? <p>{res.name_th}</p>
+                                                                                                ? <>
+                                                                                                    <p>{res.name_th}</p>
+                                                                                                </>
                                                                                                 : null
                                                                                         }
                                                                                     </>
