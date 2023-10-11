@@ -26,6 +26,8 @@ function User_score() {
     const [pageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
     const [dynamic_course, setDynamic_course] = useState('');
+    const [display_score, setDisplay_score] = useState("")
+
     const today = new Date()
     const m = today.getMonth() + 1
     const y = today.getFullYear()
@@ -85,6 +87,7 @@ function User_score() {
             val.profi_score,
             val.sum_score,
             val.pass_fail,
+            display_score
         ])
 
         const contents = {
@@ -101,6 +104,7 @@ function User_score() {
                     "รวมคะแนน",
 
                     "ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%",
+                    "ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%",
                 ]
             ],
             body: data,
@@ -116,6 +120,7 @@ function User_score() {
         doc.text('ลงชื่อ ผู้ทดสอบมาตรฐานฝีมือแรงงาน', text_x, text_y_2)
         doc.save("ข้อมูลคะแนนสอบประจำเดือน.pdf")
     }
+
 
 
     //Logout and Clear a localStorage
@@ -176,7 +181,17 @@ function User_score() {
         setPage(newPage);
     };
 
-    console.log(display_user)
+    useEffect(() => {
+        display_user.map((val) => {
+            if(val.sum_score < 70){
+                setDisplay_score("ไม่ผ่าน")
+            }else{
+                setDisplay_score("ผ่าน")
+            }
+            
+        })
+    },[display_user])
+
 
     return (
         <>
@@ -275,9 +290,9 @@ function User_score() {
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนภาคความรู้</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >คะแนนภาคความสามารถ</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนทดสอบรวม</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลการทดสอบ</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '130px' }}>วันที่สมัคร</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '150px' }}>แก้ไข-ลบข้อมูล</th>
+                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%</th>
+                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%</th>
+                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">แก้ไข-ลบข้อมูล</th>
                                                                 </tr>
                                                             </thead>
 
@@ -319,7 +334,10 @@ function User_score() {
                                                                                             </p>
                                                                                         </>
                                                                                     )}</td>
-                                                                                <td>{toThaiDateString(items.change_reg_day)}</td>
+                                                                                    {display_score == 'ไม่ผ่าน'
+                                                                                    ? <td style={{ color: 'red', textDecoration: 'underline' }}>{display_score}</td>
+                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>}
+                                                                                
                                                                                 <td>
                                                                                     <Link to={{ pathname: `/edit_score/${items.reg_id}` }}>
                                                                                         <button className="btn btn-danger">

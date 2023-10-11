@@ -768,7 +768,7 @@ function Certifi_rp() {
                                                                             <>
                                                                                 <tr key={items.reg_id} role="row" className="odd">
                                                                                     <td className="sorting_1">{items.reg_id}</td>
-                                                                                    <td>{items.course_name_th}</td>
+                                                                                    <td>{items.course}</td>
                                                                                     <td>{items.name} {items.lastname}</td>
                                                                                     <td>{items.kn_score}</td>
                                                                                     <td>{items.profi_score}</td>
