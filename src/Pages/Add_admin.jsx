@@ -70,9 +70,15 @@ function Add_admin() {
                 pwd: pwd ,
                 permission: 'admin'
             }).then((res) => {
+                console.log(res.data)
                 if(res.data.STATUS === 'เพิ่มข้อมูลเสร็จสิ้น'){
                     alert(res.data.STATUS)
-                }else{
+                    window.location = '/add_admin'
+                }else if(res.data.STATUS === 'ชื่อผู้ใช้มีผู้ใช้งานแล้ว'){
+                    alert(res.data.STATUS)
+                    window.location = '/add_admin'
+                }
+                else{
                     console.log(res.data)
                     alert(res.data)
                     return false
@@ -160,8 +166,8 @@ function Add_admin() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" className="btn btn-primary me-2" onClick={Updata_user_info}>เพิ่มข้อมูล</button>
                                     </form>
+                                    <button type="submit" className="btn btn-primary me-2" onClick={Updata_user_info}>เพิ่มข้อมูล</button>
                                     
 
                                 </div>
