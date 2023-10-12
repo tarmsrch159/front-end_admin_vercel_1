@@ -57,34 +57,34 @@ function Add_admin() {
 
         if (pwd !== confirm_pwd) {
             alert('รหัสผ่านไม่ตรงกัน กรุณากรอกใหม่อีกครั้ง')
-            
-        } else if(confirm_pwd === ''){
+
+        } else if (confirm_pwd === '') {
             alert('กรุณากรอกข้อมูลให้ครบ')
             return
-        }else {
-            axios.post("https://server-2-s3v5.onrender.com/add_admin/", { 
-                name: name, 
-                lastname: lastname ,
-                tel: tel ,
-                username: username ,
-                pwd: pwd ,
+        } else {
+            axios.post("https://server-2-s3v5.onrender.com/add_admin/", {
+                name: name,
+                lastname: lastname,
+                tel: tel,
+                username: username,
+                pwd: pwd,
                 permission: 'admin'
             }).then((res) => {
                 console.log(res.data)
-                if(res.data.STATUS === 'เพิ่มข้อมูลเสร็จสิ้น'){
+                if (res.data.STATUS === 'เพิ่มข้อมูลเสร็จสิ้น') {
                     alert(res.data.STATUS)
                     window.location = '/add_admin'
-                }else if(res.data.STATUS === 'ชื่อผู้ใช้มีผู้ใช้งานแล้ว'){
+                } else if (res.data.STATUS === 'ชื่อผู้ใช้มีผู้ใช้งานแล้ว') {
                     alert(res.data.STATUS)
                     window.location = '/add_admin'
                 }
-                else{
+                else {
                     console.log(res.data)
                     alert(res.data)
                     return false
                 }
             })
-                
+
         }
 
     }
@@ -168,7 +168,7 @@ function Add_admin() {
                                         </div>
                                     </form>
                                     <button type="submit" className="btn btn-primary me-2" onClick={Updata_user_info}>เพิ่มข้อมูล</button>
-                                    
+
 
                                 </div>
                             </div>
@@ -190,15 +190,15 @@ function Add_admin() {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            {/* <h5 className="modal-title" id="exampleModalLabel">ต้องการที่จะออกหรือไม่</h5> */}
                             <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <h4 className="modal-body" style={{ textAlign: 'center' }}>ต้องการที่จะออกหรือไม่</h4>
                         <div className="modal-footer">
-                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
+                            <button className="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
+                            <button className="btn btn-primary" onClick={handleLogout}>ออกจากระบบ</button>
                         </div>
                     </div>
                 </div>

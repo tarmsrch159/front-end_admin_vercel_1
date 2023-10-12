@@ -54,7 +54,7 @@ function Edit_score() {
 
 
     //Update Function
-    var insert_score = async ()  => {
+    var insert_score = async () => {
         if (confirm("ต้องการกรอกคะแนนใช่หรือไม่")) {
             axios.put("https://server-2-s3v5.onrender.com/sum_score", {
                 reg_id: reg_id,
@@ -63,10 +63,10 @@ function Edit_score() {
                 total_score: total_score,
                 pass_fail: pass_fail
             }).then((res) => {
-                if(res.data.status === "true"){
+                if (res.data.status === "true") {
                     alert("เพิ่มคะแนนเรียบร้อย")
                     window.location = '/user_score'
-                }else{
+                } else {
                     alert("กรุณาลองใหม่อีกครั้ง")
                     return false
                 }
@@ -89,13 +89,19 @@ function Edit_score() {
         }
 
         setTotal_score(kn_score + profi_score)
-        if(total_score >= 70){
+        if (total_score >= 70) {
             setPass_fail("ผ่าน")
-        }else{
+        } else {
             setPass_fail("ไม่ผ่าน")
         }
     }, [kn_score, profi_score, total_score, pass_fail])
 
+    const [show_course, setShow_course] = useState([])
+    useEffect(() => {
+        axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+            setShow_course(res.data)
+        })
+    }, [])
     return (
         <>
             {/* Page Wrapper */}
@@ -128,8 +134,17 @@ function Edit_score() {
                                                         <div className="row">
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black' }}>หลักสูตร</label>
-                                                                <input className="form-control" type="text" value={val.course} aria-label="input example"
-                                                                    onChange={(e) => setUp_idcard(e.target.value)}></input>
+                                                                {show_course.map((res) => {
+                                                                    return <>
+                                                                        {
+                                                                            res.id == val.course
+                                                                                ? <input className="form-control" type="text" value={res.name_th} aria-label="input example"
+                                                                                ></input>
+                                                                                : null
+                                                                        }
+                                                                    </>
+                                                                })}
+
                                                             </div>
                                                         </div>
 
@@ -148,16 +163,16 @@ function Edit_score() {
                                                         </div>
 
                                                         <hr />
-                                                        <h2 style={{ color: "blue", textAlign: "center", marginBottom: '50px', marginTop: "30px" }}>จัดการข้อมูลคะแนน</h2>
+                                                        <h2 style={{ color: "black", textAlign: "center", marginBottom: '50px', marginTop: "30px" }}>จัดการข้อมูลคะแนน</h2>
                                                         <div className='row'>
                                                             <div className="col-5 form-group">
-                                                                <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '25px', fontWeight: "bold" }}>คะแนนภาคความรู้ 30 คะแนน</label>
+                                                                <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>คะแนนภาคความรู้ 30 คะแนน</label>
                                                                 <input type="text" className="form-control" id="exampleInputUsername1" placeholder='กรอกคะแนนภาคความรู้ 30 คะแนน'
                                                                     onChange={change_knscore} value={kn_score} />
                                                             </div>
 
                                                             <div className="col-5 form-group">
-                                                                <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '25px', fontWeight: "bold" }}>
+                                                                <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>
                                                                     คะแนนภาคความสามารถ 70 คะแนน</label>
                                                                 <input type="text" className="form-control" id="exampleInputUsername1"
                                                                     placeholder='กรอกคะแนนภาคความสามารถ 70 คะแนน' onChange={change_profiscore} value={profi_score} />
@@ -196,15 +211,15 @@ function Edit_score() {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            {/* <h5 className="modal-title" id="exampleModalLabel">ต้องการที่จะออกหรือไม่</h5> */}
                             <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <h4 className="modal-body" style={{ textAlign: 'center' }}>ต้องการที่จะออกหรือไม่</h4>
                         <div className="modal-footer">
-                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
+                            <button className="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
+                            <button className="btn btn-primary" onClick={handleLogout}>ออกจากระบบ</button>
                         </div>
                     </div>
                 </div>
