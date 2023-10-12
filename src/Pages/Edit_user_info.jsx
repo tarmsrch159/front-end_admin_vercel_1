@@ -427,7 +427,7 @@ function Edit_user_info() {
 
                                                 </form>
                                                 <button type="submit" className="btn btn-primary me-2" onClick={() => Updata_user_info(val.reg_id)}>อัปเดตข้อมูล</button>
-                                                <button className="btn btn-light">Cancel</button>
+                                                
 
                                             </>
                                         )
