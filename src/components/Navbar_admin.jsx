@@ -18,11 +18,16 @@ function Navbar_admin(permission) {
         }
     }
 
-
-
-    // console.log(get_lastname)
-    // console.log(get_name)
-    // console.log(get_permission)
+    const handleLogout = () => {
+        if(confirm('ท่านต้องการออกจากระบบใช่หรือไม่')){
+            localStorage.clear()
+            window.location = '/'
+        }else{
+            return false
+        }
+        
+    }
+    
     return (
         <>
             {/* Topbar */}
@@ -95,7 +100,7 @@ function Navbar_admin(permission) {
                                 </button>
                             </li>
                             <li>
-                                <button className="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
+                                <button className="dropdown-item" href="" onClick={handleLogout}>
                                     ออกจากระบบ
                                 </button>
                             </li>
