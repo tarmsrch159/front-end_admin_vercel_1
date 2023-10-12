@@ -90,14 +90,14 @@ function Navbar_admin(permission) {
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <a className="dropdown-item" href="#">
+                                <button className="dropdown-item" href="">
                                     สิทธิ์การเข้าถึง: {get_permission}
-                                </a>
+                                </button>
                             </li>
                             <li>
-                                <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <button className="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     ออกจากระบบ
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>

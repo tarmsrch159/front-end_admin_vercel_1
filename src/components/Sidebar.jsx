@@ -17,10 +17,7 @@ function Sidebar() {
 
 
     const [ActiveLink, setActiveLink] = useState("nav-item active")
-
-    const active_sidebar = () => {
-
-    }
+    console.log(style)
     return (
         <>
             {/* Sidebar */}
