@@ -63,10 +63,13 @@ function Edit_score() {
                 total_score: total_score,
                 pass_fail: pass_fail
             }).then((res) => {
-                if (res.data.status === "true") {
+                if (res.data.status === "กรุณากรอกคะแนนให้ถูกต้อง") {
+                    alert("กรุณากรอกคะแนนให้ถูกต้อง")
+                }else if(res.data.status === "true"){
                     alert("เพิ่มคะแนนเรียบร้อย")
                     window.location = '/user_score'
-                } else {
+                } 
+                else {
                     alert("กรุณาลองใหม่อีกครั้ง")
                     return false
                 }
@@ -81,6 +84,7 @@ function Edit_score() {
             setName(res.data[0].name)
             setLastname(res.data[0].lastname)
             setCourse(res.data[0].course)
+            
         })
         if (!permission) {
             console.log("Please login again")

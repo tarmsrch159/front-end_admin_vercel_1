@@ -349,10 +349,12 @@ function User_score() {
                                                                                             </p>
                                                                                         </>
                                                                                     )}</td>
-                                                                                {display_score == 'ไม่ผ่าน'
+                                                                                {/* {display_score == 'ไม่ผ่าน'
                                                                                     ? <td style={{ color: 'red', textDecoration: 'underline' }}>{display_score}</td>
-                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>}
-
+                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>} */}
+                                                                                {items.pass_fail == 'ไม่ผ่าน'
+                                                                                    ? <td style={{ color: 'red', textDecoration: 'underline' }}>{items.pass_fail}</td>
+                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{items.pass_fail}</td>}
                                                                                 <td>
                                                                                     <Link to={{ pathname: `/edit_score/${items.reg_id}` }}>
                                                                                         <button className="btn btn-danger">
