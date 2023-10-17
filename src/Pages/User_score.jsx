@@ -334,18 +334,18 @@ function User_score() {
                                                                                 <td>{items.kn_score}</td>
                                                                                 <td>{items.profi_score}</td>
                                                                                 <td>{items.sum_score}</td>
-                                                                                <td>{items.pass_fail === "ผ่าน"
+                                                                                <td>{items.sum_score < 50
                                                                                     ? (
                                                                                         <>
-                                                                                            <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
-                                                                                                <span class="text">ผ่าน</span>
+                                                                                            <p href="#" style={{ color: 'red' }}>
+                                                                                                <span class="text">ไม่ผ่าน</span>
                                                                                             </p>
                                                                                         </>
                                                                                     )
                                                                                     : (
                                                                                         <>
-                                                                                            <p href="#" style={{ color: 'red' }}>
-                                                                                                <span class="text">ไม่ผ่าน</span>
+                                                                                            <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
+                                                                                                <span class="text">ผ่าน</span>
                                                                                             </p>
                                                                                         </>
                                                                                     )}</td>
