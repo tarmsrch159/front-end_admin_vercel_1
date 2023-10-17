@@ -102,6 +102,8 @@ function Edit_score() {
             setShow_course(res.data)
         })
     }, [])
+
+    console.log(single_user)
     return (
         <>
             {/* Page Wrapper */}
@@ -167,15 +169,15 @@ function Edit_score() {
                                                         <div className='row'>
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>คะแนนภาคความรู้ 30 คะแนน</label>
-                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder='กรอกคะแนนภาคความรู้ 30 คะแนน'
-                                                                    onChange={change_knscore} value={kn_score} />
+                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.kn_score}
+                                                                    onChange={change_knscore} />
                                                             </div>
 
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>
                                                                     คะแนนภาคความสามารถ 70 คะแนน</label>
                                                                 <input type="text" className="form-control" id="exampleInputUsername1"
-                                                                    placeholder='กรอกคะแนนภาคความสามารถ 70 คะแนน' onChange={change_profiscore} value={profi_score} />
+                                                                    placeholder={val.profi_score} onChange={change_profiscore}  />
                                                             </div>
                                                         </div>
                                                     </div>
