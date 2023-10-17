@@ -337,7 +337,7 @@ function User_score() {
                                                                                 <td>{items.sum_score < 50
                                                                                     ? (
                                                                                         <>
-                                                                                            <p href="#" style={{ color: 'red' }}>
+                                                                                            <p href="#" style={{ color: 'red', textDecoration: 'underline' }}>
                                                                                                 <span class="text">ไม่ผ่าน</span>
                                                                                             </p>
                                                                                         </>
