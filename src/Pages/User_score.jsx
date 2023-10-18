@@ -352,9 +352,9 @@ function User_score() {
                                                                                 {/* {display_score == 'ไม่ผ่าน'
                                                                                     ? <td style={{ color: 'red', textDecoration: 'underline' }}>{display_score}</td>
                                                                                     : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>} */}
-                                                                                {items.pass_fail == 'ไม่ผ่าน'
-                                                                                    ? <td style={{ color: 'red', textDecoration: 'underline' }}>{items.pass_fail}</td>
-                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{items.pass_fail}</td>}
+                                                                                {items.sum_score >= 70
+                                                                                    ? <td style={{ color: 'green', textDecoration: 'underline' }}>ผ่าน</td>
+                                                                                    : <td style={{ color: 'red', textDecoration: 'underline' }}>ไม่ผ่าน</td>}
                                                                                 <td>
                                                                                     <Link to={{ pathname: `/edit_score/${items.reg_id}` }}>
                                                                                         <button className="btn btn-danger">
