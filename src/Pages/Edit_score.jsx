@@ -184,14 +184,14 @@ function Edit_score() {
                                                         <div className='row'>
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>คะแนนภาคความรู้ 30 คะแนน</label>
-                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.kn_score}
+                                                                <input maxLength={3} type="text" className="form-control" id="exampleInputUsername1" placeholder={val.kn_score}
                                                                      onChange={change_knscore} />
                                                             </div>
 
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>
                                                                     คะแนนภาคความสามารถ 70 คะแนน</label>
-                                                                <input type="text" className="form-control" id="exampleInputUsername1"
+                                                                <input maxLength={3} type="text" className="form-control" id="exampleInputUsername1"
                                                                      placeholder={val.profi_score} onChange={change_profiscore}  />
                                                             </div>
                                                         </div>

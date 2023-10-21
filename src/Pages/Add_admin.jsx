@@ -148,7 +148,7 @@ function Add_admin() {
                                             <div className="row">
                                                 <div className="col-5 form-group">
                                                     <label htmlFor="exampleInputUsername1">เบอร์โทรศัพท์</label>
-                                                    <input  type="text" className="form-control" id="exampleInputUsername2" onChange={handleTel} value={tel} required />
+                                                    <input  type="text" className="form-control" maxLength={10} id="exampleInputUsername2" onChange={handleTel} value={tel} required />
                                                 </div>
                                                 <div className="col-7">
 

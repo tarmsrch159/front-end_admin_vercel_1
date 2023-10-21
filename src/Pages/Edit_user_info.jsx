@@ -370,7 +370,7 @@ function Edit_user_info() {
 
                                                         <div className="form-group">
                                                             <label htmlFor="exampleInputUsername1">โทรศัพท์</label>
-                                                            <input type="text" className="form-control" id="exampleInputUsername2" placeholder={val.tel} value={tel} onChange={handleTel} />
+                                                            <input type="text" maxLength={10} className="form-control" id="exampleInputUsername2" placeholder={val.tel} value={tel} onChange={handleTel} />
                                                         </div>
 
                                                         <div className="form-group">
