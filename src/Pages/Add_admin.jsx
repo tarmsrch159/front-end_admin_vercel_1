@@ -22,7 +22,7 @@ function Add_admin() {
     const [birthday, setBirthday] = useState(new Date());
     const [name, setName] = useState('')
     const [lastname, setLastname] = useState('')
-    const [tel, setTel] = useState('')
+    const [tel, setTel] = useState("")
     const [username, setUsername] = useState('')
     const [pwd, setPwd] = useState('')
     const [confirm_pwd, setConfirm_Pwd] = useState('')
@@ -100,6 +100,12 @@ function Add_admin() {
         }
     }, [])
 
+    
+    const handleTel = (e) => {
+        const result_4 = e.target.value.replace(/\D/g, '');
+    
+        setTel(result_4)
+      }
 
 
 
@@ -142,7 +148,7 @@ function Add_admin() {
                                             <div className="row">
                                                 <div className="col-5 form-group">
                                                     <label htmlFor="exampleInputUsername1">เบอร์โทรศัพท์</label>
-                                                    <input onChange={(e) => setTel(e.target.value)} type="text" className="form-control" id="exampleInputUsername2" required />
+                                                    <input  type="text" className="form-control" id="exampleInputUsername2" onChange={handleTel} value={tel} required />
                                                 </div>
                                                 <div className="col-7">
 

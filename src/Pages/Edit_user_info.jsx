@@ -189,6 +189,25 @@ function Edit_user_info() {
         course_id()
     }, [])
 
+    const  handleName_en = (e) => {
+        const result_1 = e.target.value.replace(/[^a-z]/gi, '')
+        
+        setName_EN(result_1)
+      }
+    
+    
+    const  handleLastname_en = (e) => {
+        const result_2 = e.target.value.replace(/[^a-z]/gi, '')
+    
+        setLastname_EN(result_2)
+    }
+
+    const handleTel = (e) => {
+        const result_3 = e.target.value.replace(/\D/g, '')
+
+        setTel(result_3)
+    }
+
 
     return (
         <>
@@ -313,12 +332,12 @@ function Edit_user_info() {
                                                         <div className='row'>
                                                             <div className="col form-group">
                                                                 <label htmlFor="exampleInputUsername1">ชื่อ ภาษาอังกฤษ</label>
-                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.name_en} onChange={(e) => setName_EN(e.target.value)} />
+                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.name_en} value={name_EN} onChange={handleName_en} />
                                                             </div>
 
                                                             <div className="col form-group">
                                                                 <label htmlFor="exampleInputUsername1">นามสกุล ภาษาอังกฤษ</label>
-                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.lastname_en} onChange={(e) => setLastname_EN(e.target.value)} />
+                                                                <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.lastname_en} value={lastname_EN} onChange={handleLastname_en} />
                                                             </div>
                                                         </div>
 
@@ -351,7 +370,7 @@ function Edit_user_info() {
 
                                                         <div className="form-group">
                                                             <label htmlFor="exampleInputUsername1">โทรศัพท์</label>
-                                                            <input type="text" className="form-control" id="exampleInputUsername2" placeholder={val.tel} onChange={(e) => setTel(e.target.value)} />
+                                                            <input type="text" className="form-control" id="exampleInputUsername2" placeholder={val.tel} value={tel} onChange={handleTel} />
                                                         </div>
 
                                                         <div className="form-group">

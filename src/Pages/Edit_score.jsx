@@ -107,7 +107,18 @@ function Edit_score() {
         })
     }, [])
 
-    console.log(single_user)
+    const handleKn_score = (e) => {
+        const result_3 = +e.target.value.replace(/\D/g, '')
+
+        setKn_score(result_3)
+    }
+
+    const handleProfi_score = (e) => {
+        const result_4 = +e.target.value.replace(/\D/g, '')
+
+        setProfi_score(result_4)
+    }
+
     return (
         <>
             {/* Page Wrapper */}
@@ -174,14 +185,14 @@ function Edit_score() {
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>คะแนนภาคความรู้ 30 คะแนน</label>
                                                                 <input type="text" className="form-control" id="exampleInputUsername1" placeholder={val.kn_score}
-                                                                    onChange={change_knscore} />
+                                                                     onChange={change_knscore} />
                                                             </div>
 
                                                             <div className="col-5 form-group">
                                                                 <label htmlFor="exampleInputUsername1" style={{ color: 'black', fontSize: '18px', }}>
                                                                     คะแนนภาคความสามารถ 70 คะแนน</label>
                                                                 <input type="text" className="form-control" id="exampleInputUsername1"
-                                                                    placeholder={val.profi_score} onChange={change_profiscore}  />
+                                                                     placeholder={val.profi_score} onChange={change_profiscore}  />
                                                             </div>
                                                         </div>
                                                     </div>
