@@ -95,7 +95,7 @@ function User_info() {
     }
 
     //Display user
-    axios.get(`https://server-2-s3v5.onrender.com/display_all_user?page=${page}&pageSize=${pageSize}`).then((res) => {
+    axios.get(`https://server-2-s3v5.onrender.com/display_all_user_edit?page=${page}&pageSize=${pageSize}`).then((res) => {
       setDisplay_user(res.data.data)
 
       setTotalPages(res.data.totalPages);
