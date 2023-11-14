@@ -23,7 +23,6 @@ function Certifi_rp() {
     const [display_user, setDisplay_user] = useState([])
     const [rt_text, setRT_text] = useState("")
     const [show_permission, setShow_permission] = useState(null)
-    const [change_m, setChange_m] = useState(1)
     const [data_status, setData_status] = useState()
     const [m_th, setM_th] = useState("")
     const [change_course, setChange_course] = useState(1)
@@ -34,7 +33,8 @@ function Certifi_rp() {
     const today = new Date()
     const year_thai = today.getFullYear() + 543
     const year_en = today.getFullYear()
-
+    const m = today.getMonth() + 1
+    const [change_m, setChange_m] = useState(m)
 
     const toThaiDateString = (date) => {
         const change_date = new Date(date)
@@ -57,6 +57,56 @@ function Certifi_rp() {
         window.location = '/'
     }
 
+    const j_month = [
+        {
+            id: '1',
+            month_n: 'มกราคม'
+        },
+        {
+            id: '2',
+            month_n: 'กุมภาพันธ์'
+        },
+        {
+            id: '3',
+            month_n: 'มีนาคม'
+        },
+        {
+            id: '4',
+            month_n: 'เมษายน'
+        },
+        {
+            id: '5',
+            month_n: 'พฤษภาคม'
+        },
+        {
+            id: '6',
+            month_n: 'มิถุนายน'
+        },
+        {
+            id: '7',
+            month_n: 'กรกฎาคม'
+        },
+        {
+            id: '8',
+            month_n: 'สิงหาคม'
+        },
+        {
+            id: '9',
+            month_n: 'กันยายน'
+        },
+        {
+            id: '10',
+            month_n: 'ตุลาคม'
+        },
+        {
+            id: '11',
+            month_n: 'พฤศจิกายน'
+        },
+        {
+            id: '12',
+            month_n: 'ธันวาคม'
+        },
+    ]
 
     const Export_pdf = () => {
         const doc = new jsPDF()
@@ -205,7 +255,7 @@ function Certifi_rp() {
             doc.setFont("Font")
             const fontSize6 = 16
             doc.setFontSize(fontSize6)
-            doc.text(`${single_certi.name_en} ${single_certi.lastname_en}`, x_text, 104, { align: "center" })
+            doc.text(`${single_certi.prefixEN} ${single_certi.name_en} ${single_certi.lastname_en}`, x_text, 104, { align: "center" })
 
             doc.setFont("MyFont")
             const fontSize7 = 16
@@ -637,6 +687,7 @@ function Certifi_rp() {
         setPage(newPage);
     };
 
+    console.log(m_th)
 
     return (
         <>
@@ -680,7 +731,7 @@ function Certifi_rp() {
                                                     <div className="dataTables_length" id="dataTable_length">
                                                         <label className='mr-3'>ข้อมูลประจำเดือน
                                                             <select onChange={(e) => setChange_m(e.target.value)} name="dataTable_length" aria-controls="dataTable" className="custom-select custom-select-sm form-control form-control-sm">
-                                                                <option value="1">มกราคม</option>
+                                                                {/* <option value="1">มกราคม</option>
                                                                 <option value="2">กุมภาพันธ์</option>
                                                                 <option value="3">มีนาคม</option>
                                                                 <option value="4">เมษายน</option>
@@ -691,7 +742,16 @@ function Certifi_rp() {
                                                                 <option value="9">กันยายน</option>
                                                                 <option value="10">ตุลาคม</option>
                                                                 <option value="11">พฤศจิกายน</option>
-                                                                <option value="12">ธันวาคม</option>
+                                                                <option value="12">ธันวาคม</option> */}
+
+                                                                {j_month.map((items) => {
+                                                                    return <>
+                                                                    {m == items.id
+                                                                    ? <option key={items.id} value={items.id} selected>{items.month_n}</option>
+                                                                    : <option key={items.id} value={items.id}>{items.month_n}</option>
+                                                                    }
+                                                                    </>
+                                                                })}
                                                             </select>
                                                         </label>
 
@@ -743,7 +803,7 @@ function Certifi_rp() {
                                                                             บท.สพ. Xxxx/2566</th>
                                                                         {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '200px' }}>รอบที่สมัคร</th> */}
                                                                         <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>เกณฑ์กรมพัฒนาฯ 70%</th>
-                                                                        <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>ออกวุฒิบัตร</th>
+                                                                        <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '800px' }}>ออกเกียรติบัตร</th>
                                                                     </tr>
                                                                 </thead>
 
@@ -773,7 +833,7 @@ function Certifi_rp() {
                                                                                     <td style={{ color: 'green', textDecoration: 'underline' }}>{items.pass_fail}</td>
                                                                                     <td>เลขที่ บท.สพ. {items.book_id}</td>
                                                                                     {/* <td>{toThaiDateString(items.change_reg_day)}</td> */}
-                                                                                    <td style={{ color: 'green', textDecoration: 'underline' }}> รับวุฒิบัตร
+                                                                                    <td style={{ color: 'green', textDecoration: 'underline' }}> รับเกียรติบัตร
                                                                                     </td>
                                                                                     <td>{/* Button trigger modal */}
                                                                                         <button

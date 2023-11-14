@@ -18,7 +18,6 @@ function User_score() {
     const [display_user, setDisplay_user] = useState([])
     const [rt_text, setRT_text] = useState("")
     const [show_permission, setShow_permission] = useState(null)
-    const [change_m, setChange_m] = useState(1)
     const [data_status, setData_status] = useState()
     const [m_th, setM_th] = useState("")
     const [change_course, setChange_course] = useState(1)
@@ -27,12 +26,20 @@ function User_score() {
     const [totalPages, setTotalPages] = useState(0);
     const [dynamic_course, setDynamic_course] = useState('');
     const [display_score, setDisplay_score] = useState("")
+    const [up_Knscore, setUp_Knscore] = useState(0)
+    const [up_Profiscore, setUp_Profiscore] = useState(0)
+    const [up_Sum, setUp_Sum] = useState(0)
 
     const today = new Date()
     const m = today.getMonth() + 1
     const y = today.getFullYear()
     const d = today.getDate()
     const current_date = y + '-' + m + '-' + d
+
+    const [change_m, setChange_m] = useState(m)
+    var count = 1
+
+
     // const [display_course, setDisplay_course] = useState([])
 
     const toThaiDateString = (date) => {
@@ -49,6 +56,58 @@ function User_score() {
 
         return `${numOfDay} ${month} ${year}`
     }
+
+    const j_month = [
+        {
+            id: '1',
+            month_n: 'มกราคม'
+        },
+        {
+            id: '2',
+            month_n: 'กุมภาพันธ์'
+        },
+        {
+            id: '3',
+            month_n: 'มีนาคม'
+        },
+        {
+            id: '4',
+            month_n: 'เมษายน'
+        },
+        {
+            id: '5',
+            month_n: 'พฤษภาคม'
+        },
+        {
+            id: '6',
+            month_n: 'มิถุนายน'
+        },
+        {
+            id: '7',
+            month_n: 'กรกฎาคม'
+        },
+        {
+            id: '8',
+            month_n: 'สิงหาคม'
+        },
+        {
+            id: '9',
+            month_n: 'กันยายน'
+        },
+        {
+            id: '10',
+            month_n: 'ตุลาคม'
+        },
+        {
+            id: '11',
+            month_n: 'พฤศจิกายน'
+        },
+        {
+            id: '12',
+            month_n: 'ธันวาคม'
+        },
+    ]
+
 
     const Export_pdf = () => {
         const doc = new jsPDF()
@@ -190,7 +249,9 @@ function User_score() {
             }
 
         })
-    }, [display_user])
+
+        setUp_Sum(up_Knscore + up_Profiscore)
+    }, [display_user, up_Knscore, up_Profiscore])
 
     const [show_course, setShow_course] = useState([])
     useEffect(() => {
@@ -199,6 +260,177 @@ function User_score() {
         })
     }, [])
 
+    // const [update_score_Arr, setUpdate_score_Arr] = useState([{
+    //     reg_id: "",
+    //     scores: { kn_score: 0, profi_score: 0, }
+        
+    // }])
+
+    const handleScoreChange = (id, type, value) => {
+        setDisplay_user(prevData => {
+            return prevData.map(person => {
+                if (person.reg_id === id) {
+                    return {
+                        ...person,
+                       [type]: value 
+                    };
+                }
+                return person;
+            });
+        });
+    };
+
+    const newDataForAPI = display_user.map(person => {
+        return {
+            reg_id: person.reg_id,
+            kn_score: person.kn_score,
+            profi_score: person.profi_score
+        };
+        // return 
+    });
+
+    const update_score = async (reg_id) => {
+        // if (update_score_Arr[0].kn_score == 0) {
+        //     alert('กรุณากรอกคะแนน')
+        //     return false
+        // }
+        await axios.put("https://server-2-s3v5.onrender.com/sum_score", newDataForAPI
+            // {
+            //     reg_id: reg_id,
+            //     kn_score: kn_score,
+            //     profi_score: up_Profiscore,
+            //     total_score: up_Sum
+            // }
+        ).then((res) => {
+            // if (res.data.status === true) {
+            //     alert("เพิ่มคะแนนเรียบร้อย")
+            //     window.location.reload();
+            //     // console.log(display_user)
+            // }
+            // else {
+            //     alert("กรุณาลองใหม่อีกครั้ง")
+            //     return false
+            // }
+
+            if (res) {
+                alert("เพิ่มคะแนนเรียบร้อย")
+                window.location.reload();
+                // console.log(display_user)
+            }else{
+                alert("กรุณาลองใหม่อีกครั้ง")
+                return false
+            }
+        })
+
+    }
+
+    const [test_multiple, setTest_Multiple] = useState({})
+
+    const handleCheckBox = (e) => {
+        const { value, checked } = e.target;
+
+        if (checked) {
+            setTest_Multiple((prevState) => [...prevState, value]);
+        } else {
+            setTest_Multiple((prevState) => prevState.filter((item) => item !== value));
+        }
+    }
+
+
+    const [checkedBoxes, setCheckedBoxes] = useState({});
+    const [editableData, setEditableData] = useState([]);
+
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setCheckedBoxes((prevState) => ({ ...prevState, [name]: checked }));
+
+    }
+
+
+    const handleInputChange = (event, inputName) => {
+        const value = event;
+        setUpdate_score_Arr((prevInputValues) => ({
+            ...prevInputValues,
+            [inputName]: value,
+        }));
+    };
+
+    const handleEditData = () => {
+        // index, updatedData
+        const newData = { ...inputValues };
+
+        const updatedData = [...update_score_Arr, newData];
+        
+        console.log('ข้อมูลที่อัพเดต:', updatedData);
+        // setEditableData((prevState) => {
+        //     const newState = [...prevState];
+        //     newState[index] = updatedData;
+        //     // newState.map((res) => {
+        //     //     setUpdate_score_Arr(newState, [{
+        //     //         reg_id: res.reg_id,
+        //     //         kn_score: res.kn_score,
+        //     //         profi_score: res.profi_score,
+        //     //     }])
+        //     // })
+
+        //     const updatedScoreArr_new = newState.map((res) => ({
+        //         reg_id: res.reg_id,
+        //         kn_score: res.kn_score,
+        //         profi_score: res.profi_score,
+        //     }));
+            
+        //     setUpdate_score_Arr(newState, updatedScoreArr_new)
+
+        //     return newState;
+
+        // });
+    };
+
+    // const [checkedBoxes, setCheckedBoxes] = useState([]);
+
+    // // Define the handleChange function
+    // const handleChange = (event) => {
+    //    const { name, checked } = event.target;
+
+    //    // Update the state
+    //    setCheckedBoxes((prevCheckedBoxes) => {
+    //      if (checked) {
+    //        return [...prevCheckedBoxes, name];
+    //      } else {
+    //        return prevCheckedBoxes.filter((box) => box !== name);
+    //      }
+    //    });
+    // };
+
+    // const [persons, setPersons] = useState([]);
+
+    // const addPerson = async (index, person) => {
+    //     const newState = {...person};
+    //     newState[index] = newState
+    //     console.log(newState)
+    // };
+
+    const [loading_Knscore, setLoading_Knscore] = useState(null)
+    const [loading_Profiscore, setLoading_Profiscore] = useState(null)
+    const [loading_full, setLoading_full] = useState(null)
+
+    const handle_loading_Knscore = async () => {
+        await setLoading_Knscore(true)
+        await setLoading_Profiscore(false)
+        await setLoading_full(false)
+    }
+
+    const handle_loading_Profiscore = async () => {
+        await setLoading_Profiscore(true)
+        await setLoading_Knscore(false)
+        await setLoading_full(false)
+    }
+
+    const handle_loading_Full = async () => {
+        await setLoading_full(true)
+        await setLoading_Profiscore(false)
+        await setLoading_Knscore(false)
+    }
 
     return (
         <>
@@ -240,7 +472,7 @@ function User_score() {
                                                     <div className="dataTables_length px-3" id="dataTable_length">
                                                         <label className='mr-3'>ข้อมูลประจำเดือน
                                                             <select onChange={(e) => setChange_m(e.target.value)} name="dataTable_length" aria-controls="dataTable" className="custom-select custom-select-sm form-control form-control-sm">
-                                                                <option value="1">มกราคม</option>
+                                                                {/* <option value="1">มกราคม</option>
                                                                 <option value="2">กุมภาพันธ์</option>
                                                                 <option value="3">มีนาคม</option>
                                                                 <option value="4">เมษายน</option>
@@ -251,7 +483,15 @@ function User_score() {
                                                                 <option value="9">กันยายน</option>
                                                                 <option value="10">ตุลาคม</option>
                                                                 <option value="11">พฤศจิกายน</option>
-                                                                <option value="12">ธันวาคม</option>
+                                                                <option value="12">ธันวาคม</option>o */}
+                                                                {j_month.map((items) => {
+                                                                    return <>
+                                                                        {m == items.id
+                                                                            ? <option key={items.id} value={items.id} selected>{items.month_n}</option>
+                                                                            : <option key={items.id} value={items.id}>{items.month_n}</option>
+                                                                        }
+                                                                    </>
+                                                                })}
                                                             </select>
 
                                                         </label>
@@ -276,6 +516,29 @@ function User_score() {
                                                 </div>
                                             </div>
 
+                                            <div className="row mt-3">
+                                                <div className="col-sm-3">
+                                                    <button className='btn btn-dark' onClick={handle_loading_Full}>แสดงข้อมูลของผู้ใช้ทั้งหมด</button>
+                                                </div>
+                                                <div className="col-sm-3 d-flex justify-content-end">
+                                                    {/* <button className='btn btn-primary' onClick={handle_loading_Knscore}>กรอกคะแนนภาคความรู้</button> */}
+                                                </div>
+
+                                                <div className="col-sm-3 d-flex justify-content-end">
+                                                    {/* <button className='btn btn-primary' onClick={handle_loading_Knscore}>กรอกคะแนนภาคความรู้</button> */}
+                                                </div>
+                                                <div className="col-sm-3 d-flex justify-content-end">
+                                                    {/* <button className='btn btn-success' onClick={handle_loading_Profiscore}>กรอกคะแนนภาคความสามารถ</button> */}
+                                                    <div className="d-flex justify-content-end">
+                                                        <button className='btn btn-success' style={{ marginLeft: '300px', paddingInline: '40px' }} onClick={update_score}>เพิ่มคะแนน</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <hr />
+
+
                                             {/* There's no data */}
                                             {display_user.length < 1 &&
                                                 <div style={{ display: "flex", justifyContent: 'center', alignContent: 'center' }}>
@@ -283,100 +546,334 @@ function User_score() {
                                                 </div>
                                             }
 
-                                            {/* show data if data showed */}
-                                            {display_user.length > 0 &&
+
+                                            {loading_Knscore == true
+                                                ?
                                                 <>
+                                                    {display_user.length > 0 &&
+                                                        <>
 
-                                                    <div className="row"><div className="col-sm-12">
-                                                        <table className="table table-bordered dataTable" id="dataTable" width="100%" cellSpacing={0} role="grid" aria-describedby="dataTable_info" style={{ width: '100%' }}>
-                                                            <thead>
-                                                                <tr role="row" style={{ textAlign: "center" }}>
-                                                                    <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >ลำดับ</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending">หลักสูตร</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending" >ชื่อ-นามสกุล</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนภาคความรู้</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >คะแนนภาคความสามารถ</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนทดสอบรวม</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">แก้ไข-ลบข้อมูล</th>
-                                                                </tr>
-                                                            </thead>
+                                                            <div className="row"><div className="col-sm-12">
+                                                                <table className="table table-bordered dataTable" id="dataTable" width="100%" cellSpacing={0} role="grid" aria-describedby="dataTable_info">
+                                                                    <thead>
+                                                                        <tr role="row" style={{ textAlign: "center" }}>
+                                                                            <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >ลำดับ</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending">หลักสูตร</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending" >ชื่อ-นามสกุล</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนภาคความรู้</th>
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >คะแนนภาคความสามารถ</th> */}
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนทดสอบรวม</th> */}
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%</th> */}
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">เพิ่มคะแนน</th> */}
+                                                                        </tr>
+                                                                    </thead>
 
-                                                            <tbody style={{ textAlign: "center" }}>
+                                                                    <tbody style={{ textAlign: "center" }}>
 
 
 
-                                                                {/* Search filter */}
-                                                                {display_user.filter((items) => {
-                                                                    if (rt_text === "") {
-                                                                        return items
-                                                                    } else if (items.reg_id.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
-                                                                        return items
-                                                                    } else if (items.name.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
-                                                                        return items
-                                                                    }
-                                                                }).map((items) => {
-                                                                    return (
-                                                                        <>
-                                                                            <tr key={items.reg_id} role="row" className="odd">
-                                                                                <td className="sorting_1">{items.reg_id}</td>
-                                                                                <td>{show_course.map((res) => {
-                                                                                    return <>
-                                                                                        {
-                                                                                            res.id == items.course
-                                                                                                ? <p>{res.name_th}</p>
-                                                                                                : null
-                                                                                        }
-                                                                                    </>
-                                                                                })}</td>
-                                                                                <td>{items.name} {items.lastname}</td>
-                                                                                <td>{items.kn_score}</td>
-                                                                                <td>{items.profi_score}</td>
-                                                                                <td>{items.sum_score}</td>
-                                                                                <td>{items.sum_score < 50
-                                                                                    ? (
-                                                                                        <>
-                                                                                            <p href="#" style={{ color: 'red', textDecoration: 'underline' }}>
-                                                                                                <span class="text">ไม่ผ่าน</span>
-                                                                                            </p>
-                                                                                        </>
-                                                                                    )
-                                                                                    : (
-                                                                                        <>
-                                                                                            <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
-                                                                                                <span class="text">ผ่าน</span>
-                                                                                            </p>
-                                                                                        </>
-                                                                                    )}</td>
-                                                                                {/* {display_score == 'ไม่ผ่าน'
-                                                                                    ? <td style={{ color: 'red', textDecoration: 'underline' }}>{display_score}</td>
-                                                                                    : <td style={{ color: 'green', textDecoration: 'underline' }}>{display_score}</td>} */}
-                                                                                {items.sum_score >= 70
-                                                                                    ? <td style={{ color: 'green', textDecoration: 'underline' }}>ผ่าน</td>
-                                                                                    : <td style={{ color: 'red', textDecoration: 'underline' }}>ไม่ผ่าน</td>}
-                                                                                <td>
-                                                                                    <Link to={{ pathname: `/edit_score/${items.reg_id}` }}>
-                                                                                        <button className="btn btn-danger">
+                                                                        {/* Search filter */}
+                                                                        {display_user.filter((items) => {
+                                                                            if (rt_text === "") {
+                                                                                return items
+                                                                            } else if (items.reg_id.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            } else if (items.name.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            }
+                                                                        }).map((items, index) => {
+                                                                            return (
+                                                                                <>
+                                                                                    <tr key={items.reg_id} role="row" className="odd">
+                                                                                        {/* <td style={{ textAlign: 'center' }}>
+                                                                                        <input
+                                                                                            type="checkbox"
+                                                                                            name={items.reg_id}
+                                                                                            checked={checkedBoxes[items.reg_id] || false}
+                                                                                            onChange={handleCheckboxChange}
+                                                                                        />
+                                                                                    </td> */}
+                                                                                        <td className="sorting_1">{count++}</td>
+                                                                                        <td>{show_course.map((res) => {
+                                                                                            return <>
+                                                                                                {
+                                                                                                    res.id == items.course
+                                                                                                        ? <p>{res.name_th}</p>
+                                                                                                        : null
+                                                                                                }
+                                                                                            </>
+                                                                                        })}</td>
+                                                                                        <td>{items.name} {items.lastname}</td>
+
+                                                                                        <td style={{ display: 'flex', justifyContent: 'center' }}>
+                                                                                            <input required className='form-control' type="number" pattern="[0-9]*" name={items.kn_score}
+                                                                                                onChange={(event) => handleEditData(index, { reg_id: items.reg_id, kn_score: +event.target.value })} maxLength={3} style={{ width: '70px' }} placeholder={items.kn_score} />
+                                                                                        </td>
+                                                                                        {/* <td><input className='form-control' type="number" pattern="[0-9]*" name={items.profi_score}
+                                                                                            onChange={(event) => handleEditData(index, { reg_id: items.reg_id, profi_score: +event.target.value })} maxLength={3} style={{ width: '70px' }} placeholder={items.kn_score} />
+                                                                                        </td> */}
+                                                                                        {/*  */}
+                                                                                        {/* <td><input className='form-control' stype="number" disabled style={{ width: '70px' }} placeholder={items.sum_score} /></td> */}
+                                                                                        {/* <td>{items.sum_score < 50
+                                                                                            ? (
+                                                                                                <>
+                                                                                                    <p href="#" style={{ color: 'red', textDecoration: 'underline' }}>
+                                                                                                        <span class="text">ไม่ผ่าน</span>
+                                                                                                    </p>
+                                                                                                </>
+                                                                                            )
+                                                                                            : (
+                                                                                                <>
+                                                                                                    <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
+                                                                                                        <span class="text">ผ่าน</span>
+                                                                                                    </p>
+                                                                                                </>
+                                                                                            )}</td>
+                                                                                        {items.sum_score >= 70
+                                                                                            ? <td style={{ color: 'green', textDecoration: 'underline' }}>ผ่าน</td>
+                                                                                            : <td style={{ color: 'red', textDecoration: 'underline' }}>ไม่ผ่าน</td>} */}
+                                                                                        {/* <td>
+                                                                                            <button className="btn btn-danger" onClick={update_score}>
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                        </td> */}
+                                                                                    </tr>
+                                                                                </>
+                                                                            )
+                                                                        })}
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </>
+                                                : null}
+
+                                            {loading_Profiscore == true
+                                                ? <>
+                                                    {display_user.length > 0 &&
+                                                        <>
+
+                                                            <div className="row"><div className="col-sm-12">
+                                                                <table className="table table-bordered dataTable" id="dataTable" width="100%" cellSpacing={0} role="grid" aria-describedby="dataTable_info">
+                                                                    <thead>
+                                                                        <tr role="row" style={{ textAlign: "center" }}>
+                                                                            <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >ลำดับ</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending">หลักสูตร</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending" >ชื่อ-นามสกุล</th>
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนภาคความรู้</th> */}
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >คะแนนภาคความสามารถ</th>
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนทดสอบรวม</th>
+                                                                        <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%</th>
+                                                                        <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%</th> */}
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">เพิ่มคะแนน</th> */}
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody style={{ textAlign: "center" }}>
+
+
+
+                                                                        {/* Search filter */}
+                                                                        {display_user.filter((items) => {
+                                                                            if (rt_text === "") {
+                                                                                return items
+                                                                            } else if (items.reg_id.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            } else if (items.name.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            }
+                                                                        }).map((items, index) => {
+                                                                            return (
+                                                                                <>
+                                                                                    <tr key={items.reg_id} role="row" className="odd">
+                                                                                        {/* <td style={{ textAlign: 'center' }}>
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        name={items.reg_id}
+                                                                                        checked={checkedBoxes[items.reg_id] || false}
+                                                                                        onChange={handleCheckboxChange}
+                                                                                    />
+                                                                                </td> */}
+                                                                                        <td className="sorting_1">{count++}</td>
+                                                                                        <td>{show_course.map((res) => {
+                                                                                            return <>
+                                                                                                {
+                                                                                                    res.id == items.course
+                                                                                                        ? <p>{res.name_th}</p>
+                                                                                                        : null
+                                                                                                }
+                                                                                            </>
+                                                                                        })}</td>
+                                                                                        <td>{items.name} {items.lastname}</td>
+
+                                                                                        {/* <td><input className='form-control' type="number" pattern="[0-9]*" name={items.kn_score}
+                                                                                        onChange={(event) => handleEditData(index, { reg_id: items.reg_id, kn_score: +event.target.value })} maxLength={3} style={{ width: '70px' }} placeholder={items.kn_score} />
+                                                                                    </td> */}
+                                                                                        <td style={{ display: 'flex', justifyContent: 'center' }}>
+                                                                                            <input className='form-control' type="number" pattern="[0-9]*" name={items.profi_score}
+                                                                                                onChange={(event) => handleEditData(index, { reg_id: items.reg_id, profi_score: +event.target.value })} maxLength={3} style={{ width: '70px' }} placeholder={items.profi_score} />
+                                                                                        </td>
+                                                                                        {/*  */}
+                                                                                        {/* <td><input className='form-control' stype="number" disabled style={{ width: '70px' }} placeholder={items.sum_score} /></td> */}
+                                                                                        {/* <td>{items.sum_score < 50
+                                                                                        ? (
+                                                                                            <>
+                                                                                                <p href="#" style={{ color: 'red', textDecoration: 'underline' }}>
+                                                                                                    <span class="text">ไม่ผ่าน</span>
+                                                                                                </p>
+                                                                                            </>
+                                                                                        )
+                                                                                        : (
+                                                                                            <>
+                                                                                                <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
+                                                                                                    <span class="text">ผ่าน</span>
+                                                                                                </p>
+                                                                                            </>
+                                                                                        )}</td> */}
+                                                                                        {/* {items.sum_score >= 70
+                                                                                        ? <td style={{ color: 'green', textDecoration: 'underline' }}>ผ่าน</td>
+                                                                                        : <td style={{ color: 'red', textDecoration: 'underline' }}>ไม่ผ่าน</td>} */}
+                                                                                        {/* <td>
+                                                                                        <button className="btn btn-danger" onClick={update_score}>
                                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                                                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                                                             </svg>
                                                                                         </button>
-                                                                                    </Link>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </>
-                                                                    )
-                                                                })}
+                                                                                    </td> */}
+                                                                                    </tr>
+                                                                                </>
+                                                                            )
+                                                                        })}
 
 
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    </div>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            </div>
+                                                        </>
+                                                    }
                                                 </>
-                                            }
+                                                : null}
+                                            {/* show data if data showed */}
+                                            {loading_full == true
+                                                ? <>
+                                                    {display_user.length > 0 &&
+                                                        <>
+
+                                                            <div className="row"><div className="col-sm-12">
+                                                                <table className="table table-bordered dataTable" id="dataTable" width="100%" cellSpacing={0} role="grid" aria-describedby="dataTable_info">
+                                                                    <thead>
+                                                                        <tr role="row" style={{ textAlign: "center" }}>
+                                                                            <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >ลำดับ</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending">หลักสูตร</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending" >ชื่อ-นามสกุล</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนภาคความรู้</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >คะแนนภาคความสามารถ</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending">คะแนนทดสอบรวม</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Start date: activate to sort column ascending" >ผลทดสอบเกณฑ์ มหาวิทยาลัย 50%</th>
+                                                                            <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ผลทดสอบเกณฑ์ กรมพัฒนาฝีมือแรงงาน 70%</th>
+                                                                            {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">เพิ่มคะแนน</th> */}
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody style={{ textAlign: "center" }}>
+
+
+
+                                                                        {/* Search filter */}
+                                                                        {display_user.filter((items) => {
+                                                                            if (rt_text === "") {
+                                                                                return items
+                                                                            } else if (items.reg_id.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            } else if (items.name.toLowerCase().includes(rt_text.toLocaleLowerCase())) {
+                                                                                return items
+                                                                            }
+                                                                        }).map((items, index) => {
+                                                                            return (
+                                                                                <>
+                                                                                    <tr key={items.reg_id} role="row" className="odd">
+                                                                                        {/* <td style={{ textAlign: 'center' }}>
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    name={items.reg_id}
+                                                                                    checked={checkedBoxes[items.reg_id] || false}
+                                                                                    onChange={handleCheckboxChange}
+                                                                                />
+                                                                            </td> */}
+                                                                                        <td className="sorting_1">{count++}</td>
+                                                                                        <td>{show_course.map((res) => {
+                                                                                            return <>
+                                                                                                {
+                                                                                                    res.id == items.course
+                                                                                                        ? <p>{res.name_th}</p>
+                                                                                                        : null
+                                                                                                }
+                                                                                            </>
+                                                                                        })}</td>
+                                                                                        <td>{items.name} {items.lastname}</td>
+
+                                                                                        <td><input className='form-control' type="number"  pattern="[0-9]*" name={items.kn_score}
+                                                                                             onChange={(e) => handleScoreChange(items.reg_id, 'kn_score', +e.target.value)} maxLength={3} style={{ width: '70px' }} placeholder={items.kn_score} />
+                                                                                        </td>
+                                                                                        {/* onChange={(event) => handleEditData(index, { reg_id: items.reg_id, kn_score: +event.target.value })} */}
+                                                                                        <td>
+                                                                                            <input className='form-control' type="number"  pattern="[0-9]*" name={items.profi_score}
+                                                                                                onChange={(e) => handleScoreChange(items.reg_id, 'profi_score', +e.target.value)} maxLength={3} style={{ width: '70px' }} placeholder={items.profi_score} />
+                                                                                        </td>
+                                                                                        {/*  */}
+                                                                                        <td><input className='form-control' stype="number" disabled style={{ width: '70px' }} placeholder={items.sum_score} /></td>
+                                                                                        <td>{items.sum_score < 50
+                                                                                            ? (
+                                                                                                <>
+                                                                                                    <p href="#" style={{ color: 'red', textDecoration: 'underline' }}>
+                                                                                                        <span class="text">ไม่ผ่าน</span>
+                                                                                                    </p>
+                                                                                                </>
+                                                                                            )
+                                                                                            : (
+                                                                                                <>
+                                                                                                    <p href="#" style={{ color: 'green', textDecoration: 'underline' }}>
+                                                                                                        <span class="text">ผ่าน</span>
+                                                                                                    </p>
+                                                                                                </>
+                                                                                            )}</td>
+                                                                                        {items.sum_score >= 70
+                                                                                            ? <td style={{ color: 'green', textDecoration: 'underline' }}>ผ่าน</td>
+                                                                                            : <td style={{ color: 'red', textDecoration: 'underline' }}>ไม่ผ่าน</td>}
+                                                                                        {/* <td>
+                                                                                            <button className="btn btn-danger" onClick={update_score}>
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                        </td> */}
+                                                                                    </tr>
+                                                                                </>
+                                                                            )
+                                                                        })}
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </>
+                                                : null}
+
+
 
                                             <div className="row mt-5">
                                                 <div className="col-sm-12 col-md-5">

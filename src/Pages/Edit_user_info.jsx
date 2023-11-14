@@ -151,7 +151,7 @@ function Edit_user_info() {
 
     // useEffect(() => {
     //     const get_district = async () => {
-    //         const resDistrict = await fetch(`http://localhost:3000/regular_districts/`)
+    //         const resDistrict = await fetch(`https://server-2-s3v5.onrender.com/regular_districts/`)
     //         const resDis = await resDistrict.json();
     //         setShow_district(await resDis)
     //     }
@@ -247,7 +247,7 @@ function Edit_user_info() {
                                                                         <h5 style={{ fontWeight: 'bold', marginRight: "10px", }} >รูปประจำตัว</h5>
 
                                                                         <img
-                                                                            src={`http://localhost:3000/images/${val.profile_img}`}
+                                                                            src={`https://server-2-s3v5.onrender.com/images/${val.profile_img}`}
                                                                             className="img-thumbnail"
                                                                             alt="Hollywood Sign on The Hill"
                                                                             width={100}

@@ -22,7 +22,7 @@ function User_info() {
   const [rt_text, setRT_text] = useState("")
   const [show_permission, setShow_permission] = useState(null)
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
 
   const toThaiDateString = (date) => {
@@ -160,7 +160,7 @@ function User_info() {
                                 className="custom-select custom-select-sm form-control form-control-sm"
                                 onChange={(e) => setPageSize(e.target.value)}
                               >
-                                <option value={5}>5</option>
+                                {/* <option value={5}>5</option> */}
                                 <option value={10}>10</option>
                                 <option value={20}>20</option>
                                 <option value={30}>30</option>

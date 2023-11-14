@@ -16,7 +16,7 @@ function Waiting_for_payment() {
     const [rt_text, setRT_text] = useState("")
     const [show_permission, setShow_permission] = useState(null)
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
 
@@ -27,16 +27,18 @@ function Waiting_for_payment() {
         window.location = '/'
     }
 
+    const [check_user, setCheck_user] = useState({
+        permission: []
+    })
 
 
 
     const confirm_permission = (val_id) => {
         console.log(val_id)
         if (confirm("ต้องการจะยืนยันสิทธิ์แก่ผู้สมัครคนนี้หรือไม่")) {
-            axios.put("https://server-2-s3v5.onrender.com/update_permission", {
-                reg_id: val_id,
-                permission: "ผู้สมัคร"
-            })
+            axios.put("https://server-2-s3v5.onrender.com/update_permission",
+                checkedBoxes
+            )
             window.location = '/user_info'
         } else {
             return false
@@ -79,7 +81,22 @@ function Waiting_for_payment() {
         window.open(receipt)
     }
 
-    console.log(waiting_payment)
+    const [selectedPersons, setSelectedPersons] = useState([]);
+
+    //Bring data to state as an array
+    const [checkedBoxes, setCheckedBoxes] = useState([]);
+    const handleCheckboxChange = (event) => {
+        const { checked, name } = event.target;
+        // const selectedPerson = display_user.find((items) => items.reg_id === value);
+        if (checked) {
+            setCheckedBoxes((prevState) => [...prevState, name]);
+        } else {
+            // setCheckedBoxes((prev) => prev.filter((items) => items.reg_id !== name));
+            setCheckedBoxes((prevState) => prevState.filter((item) => item !== name));
+            //Delete array object ถ้าเลขประจำตัวในArray กับที่ติ๊กในเช็คบ็อคไม่ตรงกันให้ลบทิ้ง 
+        }
+
+    };
     return (
         <>
             {/* Page Wrapper */}
@@ -111,7 +128,7 @@ function Waiting_for_payment() {
                                             <div className="row">
                                                 <div className="col-sm-12 col-md-6">
                                                     <div className="dataTables_length" id="dataTable_length">
-                                                        <label>
+                                                        <label className='mr-3'>
                                                             แสดงข้อมูลผู้ใช้{" "}
                                                             <select
                                                                 name="dataTable_length"
@@ -119,26 +136,38 @@ function Waiting_for_payment() {
                                                                 className="custom-select custom-select-sm form-control form-control-sm"
                                                                 onChange={(e) => setPageSize(e.target.value)}
                                                             >
-                                                                <option value={5}>5</option>
+                                                                {/* <option value={5}>5</option> */}
                                                                 <option value={10}>10</option>
                                                                 <option value={20}>20</option>
                                                                 <option value={30}>30</option>
                                                             </select>{" "}
-
+                                                            
                                                         </label>
+
+                                                        <label className='ml-3'>
+                                                            <button onClick={() => confirm_permission(items.reg_id)} className="btn btn-primary">
+                                                                <span className="text">คลิกยืนยันสิทธิ์</span>
+                                                            </button>
+                                                        </label>
+
                                                     </div>
                                                 </div>
 
 
                                                 <div className="col-sm-12 col-md-6">
 
+
                                                     {/* Real-time search */}
                                                     <div id="dataTable_filter" className="dataTables_filter" style={{ display: 'flex', justifyContent: "end" }}>
+                                                        
+                                                        
                                                         <label>ค้นหา: เลขบัตรปชชและชื่อ
                                                             <input type="search" className="form-control form-control-sm" placeholder
                                                                 aria-controls="dataTable" onChange={(e) => setRT_text(e.target.value)} />
                                                         </label>
                                                     </div>
+
+                                                    
 
                                                 </div>
                                                 <div className="row">
@@ -158,16 +187,17 @@ function Waiting_for_payment() {
                                                     {waiting_payment.length > 0 &&
                                                         <table className="table table-bordered dataTable" id="dataTable" width="100%" cellSpacing={0} role="grid" aria-describedby="dataTable_info" style={{ width: '100%' }}>
                                                             <thead>
-                                                                <tr role="row">
+                                                                <tr role="row" style={{ textAlign: "center" }}>
+                                                                    <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" style={{ width: '100px' }}>-</th>
                                                                     <th className="sorting_asc" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >รหัสสอบ</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-sort="ascending" aria-label="Name: activate to sort column descending" >หลักสูตร</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Position: activate to sort column ascending">ชื่อ-นามสกุล</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" >สิทธิ์การเข้าถึง</th>
                                                                     <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending" style={{ width: '130px' }} >ใบเสร็จ</th>
-                                                                    <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ยืนยันสิทธิ์</th>
+                                                                    {/* <th className="sorting" tabIndex={0} aria-controls="dataTable" rowSpan={1} colSpan={1} aria-label="Salary: activate to sort column ascending">ยืนยันสิทธิ์</th> */}
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody style={{ textAlign: "center" }}>
 
                                                                 {/* Search filter */}
                                                                 {waiting_payment.filter((items) => {
@@ -182,6 +212,14 @@ function Waiting_for_payment() {
                                                                     return (
                                                                         <>
                                                                             <tr key={items.id} role="row" className="odd">
+                                                                                <td>
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        name={items.reg_id}
+                                                                                        checked={checkedBoxes.includes(items.reg_id)}
+                                                                                        onChange={handleCheckboxChange}
+                                                                                    />
+                                                                                </td>
                                                                                 <td className="sorting_1">{items.reg_id}</td>
                                                                                 <td>{items.course_name_th}</td>
                                                                                 <td>{items.prefix} {items.name} {items.lastname}</td>
@@ -237,7 +275,7 @@ function Waiting_for_payment() {
                                                                                                     <div className="modal-content">
                                                                                                         <div className="ratio ratio-16x9">
                                                                                                             <img
-                                                                                                                src={`http://localhost:3000/images/${items.receipt}`}
+                                                                                                                src={`https://server-2-s3v5.onrender.com/images/${items.receipt}`}
                                                                                                                 width={100}
                                                                                                                 height={100}
                                                                                                             />
@@ -246,7 +284,7 @@ function Waiting_for_payment() {
                                                                                                 </div>
                                                                                             </div> */}
                                                                                             <div className='d-flex justify-content-center align-items-center'>
-                                                                                                <button className='btn btn-outline-info' onClick={() => click_receipt(`https://server-2-s3v5.onrender.com/images/${ items.receipt }`)} >
+                                                                                                <button className='btn btn-outline-info' onClick={() => click_receipt(`http://localhost:3000/images/${items.receipt}`)} >
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
                                                                                                         <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
                                                                                                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
@@ -264,7 +302,7 @@ function Waiting_for_payment() {
 
                                                                                     }
                                                                                 </td>
-                                                                                <td style={{ display: 'flex', justifyContent: "center" }}>
+                                                                                {/* <td style={{ display: 'flex', justifyContent: "center" }}>
 
                                                                                     {items.receipt != ''
                                                                                         ? <button onClick={() => confirm_permission(items.reg_id)} className="btn btn-primary">
@@ -274,7 +312,13 @@ function Waiting_for_payment() {
                                                                                             <i class="fas fa-xmark"></i>
                                                                                         </button>}
 
-                                                                                </td>
+                                                                                                                                                                            
+                                                                                        <button onClick={() => confirm_permission(items.reg_id)} className="btn btn-primary">
+                                                                                            <span className="text">คลิกยืนยันสิทธิ์</span>
+                                                                                        </button>
+
+
+                                                                                </td> */}
                                                                             </tr>
                                                                         </>
                                                                     )
