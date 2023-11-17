@@ -277,7 +277,7 @@ function Content_admin() {
         }
 
         //Display user
-        axios.get(`https://server-2-s3v5.onrender.com/display_all_user/${change_course}/?fromDate=${from_Date}&toDate=${to_Date}&page=${page}&pageSize=${pageSize}`).then((res) => {
+        axios.get(`https://cloud-server-2.vercel.app/display_all_user/${change_course}/?fromDate=${from_Date}&toDate=${to_Date}&page=${page}&pageSize=${pageSize}`).then((res) => {
             setDisplay_user(res.data.data)
             setTotalPages(res.data.totalPages);
             console.log(res)
@@ -293,7 +293,7 @@ function Content_admin() {
 
     const [show_course, setShow_course] = useState([])
     useEffect(() => {
-        axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+        axios.get('https://cloud-server-2.vercel.app/course_name').then((res) => {
             setShow_course(res.data)
 
         })

@@ -31,7 +31,7 @@ function Login_admin() {
             } else {
                 setPwd_alert(false)
             }
-            const res = await axios.post("https://server-2-s3v5.onrender.com/admin_login",
+            const res = await axios.post("https://cloud-server-2.vercel.app/admin_login",
                 JSON.stringify(user_data), {
                 headers: {
                     'Content-Type': 'application/json'

@@ -227,7 +227,7 @@ function User_score() {
 
         //Display user
         const get_users = async () => {
-            const get_data_as = await axios.get(`https://server-2-s3v5.onrender.com/user_score/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
+            const get_data_as = await axios.get(`https://cloud-server-2.vercel.app/user_score/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
             setDisplay_user(await get_data_as.data.data)
             setTotalPages(get_data_as.data.totalPages)
         }
@@ -255,7 +255,7 @@ function User_score() {
 
     const [show_course, setShow_course] = useState([])
     useEffect(() => {
-        axios.get('https://server-2-s3v5.onrender.com/course_name').then((res) => {
+        axios.get('https://cloud-server-2.vercel.app/course_name').then((res) => {
             setShow_course(res.data)
         })
     }, [])
@@ -294,7 +294,7 @@ function User_score() {
         //     alert('กรุณากรอกคะแนน')
         //     return false
         // }
-        await axios.put("https://server-2-s3v5.onrender.com/sum_score", newDataForAPI
+        await axios.put("https://cloud-server-2.vercel.app/sum_score", newDataForAPI
             // {
             //     reg_id: reg_id,
             //     kn_score: kn_score,
