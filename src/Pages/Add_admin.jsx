@@ -62,7 +62,7 @@ function Add_admin() {
             alert('กรุณากรอกข้อมูลให้ครบ')
             return
         } else {
-            axios.post("https://cloud-server-2.vercel.app/add_admin/", {
+            axios.post("https://cloud-server-2-again.vercel.app/add_admin/", {
                 name: name,
                 lastname: lastname,
                 tel: tel,
@@ -90,7 +90,7 @@ function Add_admin() {
     }
 
     useEffect(() => {
-        axios.get(`https://cloud-server-2.vercel.app/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://cloud-server-2-again.vercel.app/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
         })
         if (!permission) {

@@ -50,7 +50,7 @@ function User_info() {
 
 
   const delete_user = (reg_id) => {
-    axios.delete(`https://cloud-server-2.vercel.app/delete_member/${reg_id}`).then(() => {
+    axios.delete(`https://cloud-server-2-again.vercel.app/delete_member/${reg_id}`).then(() => {
     
       if (confirm("ต้องการจะลบข้อมูลใช่หรือไม่") == true) {
         setDisplay_user(
@@ -67,7 +67,7 @@ function User_info() {
 
   const cancel_permission = async (reg_id) => {
     if (confirm('คุณต้องการจะยกเลิกสิทธิ์ของผู้สมัครใช่หรือไม่ ?')) {
-      await axios.put('https://cloud-server-2.vercel.app/cancel_permission/' + reg_id).then(
+      await axios.put('https://cloud-server-2-again.vercel.app/cancel_permission/' + reg_id).then(
         alert('ยกเลิกสิทธิ์ของผู้สมัครเรียบร้อย')
       )
       location.reload()
@@ -95,7 +95,7 @@ function User_info() {
     }
 
     //Display user
-    axios.get(`https://cloud-server-2.vercel.app/display_all_user_edit?page=${page}&pageSize=${pageSize}`).then((res) => {
+    axios.get(`https://cloud-server-2-again.vercel.app/display_all_user_edit?page=${page}&pageSize=${pageSize}`).then((res) => {
       setDisplay_user(res.data.data)
 
       setTotalPages(res.data.totalPages);
@@ -113,7 +113,7 @@ function User_info() {
 
   const [show_course, setShow_course] = useState([])
   useEffect(() => {
-    axios.get('https://cloud-server-2.vercel.app/course_name').then((res) => {
+    axios.get('https://cloud-server-2-again.vercel.app/course_name').then((res) => {
       setShow_course(res.data)
     })
   }, [])

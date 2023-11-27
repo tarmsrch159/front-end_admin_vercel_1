@@ -67,7 +67,7 @@ function Edit_user_info() {
 
     //Update Function
     const Updata_user_info = (reg_id) => {
-        axios.put("https://cloud-server-2.vercel.app/update_user_info/", {
+        axios.put("https://cloud-server-2-again.vercel.app/update_user_info/", {
             reg_id: reg_id,
             name: name,
             lastname: lastname,
@@ -101,7 +101,7 @@ function Edit_user_info() {
     }
 
     useEffect(() => {
-        axios.get(`https://cloud-server-2.vercel.app/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://cloud-server-2-again.vercel.app/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
             setName(res.data[0].name)
             setLastname(res.data[0].lastname)
@@ -132,7 +132,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_provinces = async () => {
-            const resprovinces = await fetch("https://cloud-server-2.vercel.app/get_provinces")
+            const resprovinces = await fetch("https://cloud-server-2-again.vercel.app/get_provinces")
             const respro = await resprovinces.json();
             setShow_provinces(await respro)
         }
@@ -141,7 +141,7 @@ function Edit_user_info() {
 
     // useEffect(() => {
     //     const get_amphures = async () => {
-    //         const resAmphures = await fetch(`https://cloud-server-2.vercel.app/regular_amphures/`)
+    //         const resAmphures = await fetch(`https://cloud-server-2-again.vercel.app/regular_amphures/`)
     //         const resAmp = await resAmphures.json();
     //         setShow_amphures(await resAmp)
     //     }
@@ -151,7 +151,7 @@ function Edit_user_info() {
 
     // useEffect(() => {
     //     const get_district = async () => {
-    //         const resDistrict = await fetch(`https://cloud-server-2.vercel.app/regular_districts/`)
+    //         const resDistrict = await fetch(`https://cloud-server-2-again.vercel.app/regular_districts/`)
     //         const resDis = await resDistrict.json();
     //         setShow_district(await resDis)
     //     }
@@ -161,7 +161,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_amphures = async () => {
-            const resAmphures = await fetch(`https://cloud-server-2.vercel.app/get_amphures/${province_id}`)
+            const resAmphures = await fetch(`https://cloud-server-2-again.vercel.app/get_amphures/${province_id}`)
             const resAmp = await resAmphures.json();
             setShow_amphures(await resAmp)
         }
@@ -171,7 +171,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const get_district = async () => {
-            const resDistrict = await fetch(`https://cloud-server-2.vercel.app/get_districts/${amphure_id}`)
+            const resDistrict = await fetch(`https://cloud-server-2-again.vercel.app/get_districts/${amphure_id}`)
             const resDis = await resDistrict.json();
             setShow_district(await resDis)
         }
@@ -181,7 +181,7 @@ function Edit_user_info() {
 
     useEffect(() => {
         const course_id = async () => {
-            const resCourse_id = await fetch(`https://cloud-server-2.vercel.app/course_name`)
+            const resCourse_id = await fetch(`https://cloud-server-2-again.vercel.app/course_name`)
             const resCourse = await resCourse_id.json();
             setCourse_id_api(await resCourse)
         }
@@ -247,7 +247,7 @@ function Edit_user_info() {
                                                                         <h5 style={{ fontWeight: 'bold', marginRight: "10px", }} >รูปประจำตัว</h5>
 
                                                                         <img
-                                                                            src={`https://cloud-server-2.vercel.app/images/${val.profile_img}`}
+                                                                            src={`https://cloud-server-2-again.vercel.app/images/${val.profile_img}`}
                                                                             className="img-thumbnail"
                                                                             alt="Hollywood Sign on The Hill"
                                                                             width={100}

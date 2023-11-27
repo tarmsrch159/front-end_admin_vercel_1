@@ -173,7 +173,7 @@ function Certifi_rp() {
 
     const Export_certificate = async (reg_id) => {
         const certifi = async () => {
-            const certifi_get = await axios.get('https://cloud-server-2.vercel.app/get_single_certi/' + reg_id)
+            const certifi_get = await axios.get('https://cloud-server-2-again.vercel.app/get_single_certi/' + reg_id)
             setSingle_certi(await certifi_get.data[0])
         }
         await certifi()
@@ -364,8 +364,8 @@ function Certifi_rp() {
                 120, 253, { align: "center" })
 
 
-            doc.addImage(`https://cloud-server-2.vercel.app/images/${single_certi.profile_img}`, 'JPEG', 41, 232, 25, 30)
-            doc.addImage(`https://cloud-server-2.vercel.app/images/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
+            doc.addImage(`https://cloud-server-2-again.vercel.app/images/${single_certi.profile_img}`, 'JPEG', 41, 232, 25, 30)
+            doc.addImage(`https://cloud-server-2-again.vercel.app/images/${single_certi.profile_img}`, 'PNG', 41, 232, 25, 30)
 
             doc.setFont("Font")
             const fontSize25 = 16
@@ -673,7 +673,7 @@ function Certifi_rp() {
 
         //Display user
         const get_users = async () => {
-            const get_data_as = await axios.get(`https://cloud-server-2.vercel.app/certifi_rp/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
+            const get_data_as = await axios.get(`https://cloud-server-2-again.vercel.app/certifi_rp/${change_m}/${change_course}?page=${page}&pageSize=${pageSize}`)
             setDisplay_user(await get_data_as.data.data)
             setTotalPages(get_data_as.data.totalPages)
         }

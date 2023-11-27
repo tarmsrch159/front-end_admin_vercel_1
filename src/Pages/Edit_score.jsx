@@ -56,7 +56,7 @@ function Edit_score() {
     //Update Function
     var insert_score = async () => {
         if (confirm("ต้องการกรอกคะแนนใช่หรือไม่")) {
-            axios.put("https://cloud-server-2.vercel.app/sum_score", {
+            axios.put("https://cloud-server-2-again.vercel.app/sum_score", {
                 reg_id: reg_id,
                 kn_score: kn_score,
                 profi_score: profi_score,
@@ -78,7 +78,7 @@ function Edit_score() {
     }
 
     useEffect(() => {
-        axios.get(`https://cloud-server-2.vercel.app/edit_user_info/${id}`).then((res) => {
+        axios.get(`https://cloud-server-2-again.vercel.app/edit_user_info/${id}`).then((res) => {
             setSingle_user(res.data)
             setReg_id(res.data[0].reg_id)
             setName(res.data[0].name)
@@ -102,7 +102,7 @@ function Edit_score() {
 
     const [show_course, setShow_course] = useState([])
     useEffect(() => {
-        axios.get('https://cloud-server-2.vercel.app/course_name').then((res) => {
+        axios.get('https://cloud-server-2-again.vercel.app/course_name').then((res) => {
             setShow_course(res.data)
         })
     }, [])

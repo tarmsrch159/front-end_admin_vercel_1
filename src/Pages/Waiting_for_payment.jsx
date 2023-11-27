@@ -36,7 +36,7 @@ function Waiting_for_payment() {
     const confirm_permission = (val_id) => {
         console.log(val_id)
         if (confirm("ต้องการจะยืนยันสิทธิ์แก่ผู้สมัครคนนี้หรือไม่")) {
-            axios.put("https://cloud-server-2.vercel.app/update_permission",
+            axios.put("https://cloud-server-2-again.vercel.app/update_permission",
                 checkedBoxes
             )
             window.location = '/user_info'
@@ -64,7 +64,7 @@ function Waiting_for_payment() {
         }
 
         //Display user
-        axios.get(`https://cloud-server-2.vercel.app/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
+        axios.get(`https://cloud-server-2-again.vercel.app/do_not_pay?page=${page}&pageSize=${pageSize}`).then((res) => {
             setWaiting_payment(res.data.data)
             setTotalPages(res.data.totalPages);
         })
@@ -275,7 +275,7 @@ function Waiting_for_payment() {
                                                                                                     <div className="modal-content">
                                                                                                         <div className="ratio ratio-16x9">
                                                                                                             <img
-                                                                                                                src={`https://cloud-server-2.vercel.app/images/${items.receipt}`}
+                                                                                                                src={`https://cloud-server-2-again.vercel.app/images/${items.receipt}`}
                                                                                                                 width={100}
                                                                                                                 height={100}
                                                                                                             />
@@ -284,7 +284,7 @@ function Waiting_for_payment() {
                                                                                                 </div>
                                                                                             </div> */}
                                                                                             <div className='d-flex justify-content-center align-items-center'>
-                                                                                                <button className='btn btn-outline-info' onClick={() => click_receipt(`https://cloud-server-2.vercel.app/images/${items.receipt}`)} >
+                                                                                                <button className='btn btn-outline-info' onClick={() => click_receipt(`https://cloud-server-2-again.vercel.app/images/${items.receipt}`)} >
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
                                                                                                         <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
                                                                                                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
